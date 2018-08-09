@@ -17,6 +17,7 @@
 		EF5DC0782115B1B700FFEA60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5DC0772115B1B700FFEA60 /* main.m */; };
 		EF5DC0822115B1B700FFEA60 /* JummumUrlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5DC0812115B1B700FFEA60 /* JummumUrlTests.m */; };
 		EF5DC08D2115B1B700FFEA60 /* JummumUrlUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5DC08C2115B1B700FFEA60 /* JummumUrlUITests.m */; };
+		EF5DC09B2115B1ED00FFEA60 /* Jummum Url in Resources */ = {isa = PBXBuildFile; fileRef = EF5DC09A2115B1ED00FFEA60 /* Jummum Url */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		EF5DC0882115B1B700FFEA60 /* JummumUrlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JummumUrlUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF5DC08C2115B1B700FFEA60 /* JummumUrlUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JummumUrlUITests.m; sourceTree = "<group>"; };
 		EF5DC08E2115B1B700FFEA60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF5DC09A2115B1ED00FFEA60 /* Jummum Url */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Jummum Url"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 		EF5DC0562115B1B500FFEA60 = {
 			isa = PBXGroup;
 			children = (
+				EF5DC09A2115B1ED00FFEA60 /* Jummum Url */,
 				EF5DC0612115B1B500FFEA60 /* JummumUrl */,
 				EF5DC0802115B1B700FFEA60 /* JummumUrlTests */,
 				EF5DC08B2115B1B700FFEA60 /* JummumUrlUITests */,
@@ -245,6 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF5DC09B2115B1ED00FFEA60 /* Jummum Url in Resources */,
 				EF5DC0752115B1B700FFEA60 /* LaunchScreen.storyboard in Resources */,
 				EF5DC0722115B1B700FFEA60 /* Assets.xcassets in Resources */,
 				EF5DC0702115B1B500FFEA60 /* Main.storyboard in Resources */,

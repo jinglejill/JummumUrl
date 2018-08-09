@@ -1,0 +1,499 @@
+2018-08-06T00:00:19+07:00 file: OmiseCheckOut.php, user: jinglejill@hotmail.com
+2018-08-06T00:00:19+07:00 Param=Value: omiseToken=tokn_test_5cu38vp5nf5o0cll5yn&amount=29425&type=1&promoCodeID=0&countOtOrderTaking=1&countOnOrderNote=0&priceIncludeVat=0&status=2&discountValue=0&serviceChargeValue=25&servingPerson=0&discountType=0&mergeReceiptID=0&memberID=3&creditCardNo=4242424242424242&receiptNoTaxID=&discountAmount=0&transferDate=1900-01-01 00:00:00  0000&receiptDate=2018-08-06 00:00:24  0000&discountReason=&serviceChargePercent=10&vatPercent=7&branchID=1&transferAmount=0&vatValue=19.25&modifiedDate=2018-08-06 00:00:24  0000&modifiedUser=jinglejill@hotmail.com&customerTableID=1&statusRoute=&customerType=4&receiptNoID=&cashReceive=0&receiptID=-1&creditCardType=5&creditCardAmount=294.25&remark=&cashAmount=0&openTableDate=2018-08-06 00:00:24  0000&prReceiptID=0&prUserPromotionUsedID=-1&prModifiedUser=jinglejill@hotmail.com&prModifiedDate=2018-08-06 00:00:24  0000&prPromotionID=0&prUserAccountID=3&otMenuID00=99&otMenuOrderNo00=1&otMenuTypeOrderNo00=0&otBranchID00=1&otOrderNo00=0&otModifiedDate00=2018-08-06 00:00:24  0000&otOrderTakingID00=-1&otStatus00=0&otTakeAway00=0&otCustomerTableID00=1&otReceiptID00=0&otSpecialPrice00=250&otPrice00=250&otQuantity00=1&otModifiedUser00=jinglejill@hotmail.com&otSubMenuOrderNo00=0&otNoteIDListInText00=&modifiedDeviceToken=5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db&actionScreen=call omise checkout at server&
+2018-08-06T00:00:19+07:00 token : tokn_test_5cu38vp5nf5o0cll5yn
+2018-08-06T00:00:19+07:00 amount : 29425
+2018-08-06T00:00:19+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: jinglejill@hotmail.com
+2018-08-06T00:00:19+07:00 query success, sql: select * from JUMMUM_OM_MAMARIN7.Setting where keyName = 'customerOrderStatus', modified user: jinglejill@hotmail.com
+2018-08-06T00:00:19+07:00 query success, sql: select * from Setting where keyName = 'PublicKey', modified user: jinglejill@hotmail.com
+2018-08-06T00:00:19+07:00 query success, sql: select * from Setting where keyName = 'SecretKey', modified user: jinglejill@hotmail.com
+2018-08-06T00:00:20+07:00 set auto commit to off
+2018-08-06T00:00:20+07:00 query success, sql: INSERT INTO Receipt(BranchID, CustomerTableID, MemberID, ServingPerson, CustomerType, OpenTableDate, CashAmount, CashReceive, CreditCardType, CreditCardNo, CreditCardAmount, TransferDate, TransferAmount, Remark, DiscountType, DiscountAmount, DiscountValue, DiscountReason, ServiceChargePercent, ServiceChargeValue, PriceIncludeVat, VatPercent, VatValue, Status, StatusRoute, ReceiptNoID, ReceiptNoTaxID, ReceiptDate, MergeReceiptID, ModifiedUser, ModifiedDate) VALUES ('1', '1', '3', '0', '4', '2018-08-06 00:00:24  0000', '0', '0', '5', '4242424242424242', '294.25', '1900-01-01 00:00:00  0000', '0', '', '0', '0', '0', '', '10', '25', '0', '7', '19.25', '2', '2', '', '', '2018-08-06 00:00:24  0000', '0', 'jinglejill@hotmail.com', '2018-08-06 00:00:24  0000'), modified user: jinglejill@hotmail.com
+2018-08-06T00:00:20+07:00 query success, sql: update Receipt set ReceiptNoID = '00001732' where ReceiptID = '17', modified user: jinglejill@hotmail.com
+2018-08-06T00:00:20+07:00 query success, sql: INSERT INTO OrderTaking(BranchID, CustomerTableID, MenuID, Quantity, SpecialPrice, Price, TakeAway, NoteIDListInText, OrderNo, Status, ReceiptID, ModifiedUser, ModifiedDate) VALUES ('1', '1', '99', '1', '250', '250', '0', '', '0', '0', '17', 'jinglejill@hotmail.com', '2018-08-06 00:00:24  0000'), modified user: jinglejill@hotmail.com
+2018-08-06T00:00:20+07:00 multiQueryArray: select * from Receipt where ReceiptID = '17';select * from OrderTaking where OrderTakingID in ('30');
+2018-08-06T00:00:20+07:00 query success, sql: SELECT * FROM `rewardprogram` WHERE StartDate <= now() and EndDate >= now() and type = 1 order by modifiedDate desc, modified user: jinglejill@hotmail.com
+2018-08-06T00:00:20+07:00 query success, sql: INSERT INTO RewardPoint(MemberID, ReceiptID, Point, Status, PromoCodeID, ModifiedUser, ModifiedDate) VALUES ('3', '17', '58.85', '1', '0', 'jinglejill@hotmail.com', '2018-08-06 00:00:24  0000'), modified user: jinglejill@hotmail.com
+2018-08-06T00:00:20+07:00 query success, sql: select * from JUMMUM_OM.device left join JUMMUM_OM.Branch on JUMMUM_OM.device.DbName = JUMMUM_OM.Branch.DbName where branchID = '1';, modified user: jinglejill@hotmail.com
+2018-08-06T00:00:20+07:00 send push to device: c78f3d833f01ace4c517786866d57c0429da695ac1fcb9ccd45c70662d0eeab3, body: {"alert":"New order coming!! receipt No:00001732","sound":"default","category":"printKitchenBill","content-available":1,"receiptID":17}
+2018-08-06T00:00:21+07:00 push notification: success, device token : c78f3d833f01ace4c517786866d57c0429da695ac1fcb9ccd45c70662d0eeab3, payload: {"alert":"New order coming!! receipt No:00001732","sound":"default","category":"printKitchenBill","content-available":1,"receiptID":17}
+2018-08-06T00:00:21+07:00 query success, sql: update JUMMUM_OM.Branch set LedStatus = '1', ModifiedUser = 'jinglejill@hotmail.com', ModifiedDate = '2018-08-06 00:00:24  0000' where branchID = '1';, modified user: jinglejill@hotmail.com
+2018-08-06T00:00:21+07:00 query commit, file: OmiseCheckOut.php, user: jinglejill@hotmail.com
+2018-08-06T00:01:17+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T00:01:17+07:00 Param=Value: modifiedDeviceToken=5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db&modifiedUser=(null)&
+2018-08-06T00:01:17+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T00:01:18+07:00 file: JMMLogInUserAccountInsert.php, user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 Param=Value: username=10157269137358273&logInID=1&status=1&modifiedDate=2018-08-06 00:01:24  0000&modifiedUser=jinglejill@hotmail.com&deviceToken=5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db&userAccountID=1&lineID=&birthDate=&password=&fullName=Thidaporn Kijkamjai&nickName=&roleID=0&phoneNo=&email=jinglejill@hotmail.com&modifiedDeviceToken=5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db&actionScreen=insert login and useraccount if not exist in logIn screen&
+2018-08-06T00:01:18+07:00 set auto commit to off
+2018-08-06T00:01:18+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('10157269137358273', '1', '5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db', 'jinglejill@hotmail.com', '2018-08-06 00:01:24  0000'), modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 query success, sql: select * from useraccount where username = '10157269137358273', modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 query success, sql: select *, 1 IdInserted from UserAccount where username = '10157269137358273';, modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 query success, sql: select * from receipt where memberID = '3' order by receipt.ReceiptDate DESC limit 10;, modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 query success, sql: select distinct BranchID from receipt where memberID = '3' order by receipt.ReceiptDate DESC limit 10;, modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 query success, sql: select * from OrderTaking where receiptID in (17);, modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (17));, modified user: jinglejill@hotmail.com
+2018-08-06T00:01:18+07:00 multiQueryArray: select *, 1 IdInserted from UserAccount where username = '10157269137358273';select * from receipt where memberID = '3' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (17);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (17));
+2018-08-06T00:01:18+07:00 query commit, file: JMMLogInUserAccountInsert.php, user: jinglejill@hotmail.com
+2018-08-06T00:01:21+07:00 file: JMMReceiptSummaryGetList.php, user: jinglejill@hotmail.com
+2018-08-06T00:01:21+07:00 Param=Value: receiptDate=2018-08-06 00:00:24  0000&memberID=3&modifiedDeviceToken=5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db&modifiedUser=jinglejill@hotmail.com&
+2018-08-06T00:01:21+07:00 query: selected row count = 0, sql: select * from receipt where memberID = '3' and receiptDate < '2018-08-06 00:00:24  0000' order by receipt.ReceiptDate DESC limit 10;, modified user: jinglejill@hotmail.com
+2018-08-06T00:01:21+07:00 executeMultiQuery: select * from Receipt where 0;select * from Branch where 0;select * from OrderTaking where 0;select * from Menu where 0;select * from MenuType where 0;select * from OrderNote where 0;select * from Note where 0;select * from NoteType where 0;
+2018-08-06T00:01:22+07:00 file: JMMReceiptMaxModifiedDateGetList.php, user: jinglejill@hotmail.com
+2018-08-06T00:01:22+07:00 Param=Value: memberID=3&modifiedDate=2018-08-06 00:00:37  0000&modifiedDeviceToken=5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db&modifiedUser=jinglejill@hotmail.com&
+2018-08-06T00:01:22+07:00 query: selected row count = 0, sql: select * from receipt where memberID = '3' and modifiedDate > '2018-08-06 00:00:37  0000';, modified user: jinglejill@hotmail.com
+2018-08-06T00:01:22+07:00 executeMultiQuery: select * from Receipt where 0;select * from Branch where 0;select * from OrderTaking where 0;select * from Menu where 0;select * from MenuType where 0;select * from OrderNote where 0;select * from Note where 0;select * from NoteType where 0;
+2018-08-06T00:02:08+07:00 file: JMMReceiptSummaryGetList.php, user: jinglejill@hotmail.com
+2018-08-06T00:02:08+07:00 Param=Value: receiptDate=2018-08-06 00:00:24  0000&memberID=3&modifiedDeviceToken=5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db&modifiedUser=jinglejill@hotmail.com&
+2018-08-06T00:02:08+07:00 query: selected row count = 0, sql: select * from receipt where memberID = '3' and receiptDate < '2018-08-06 00:00:24  0000' order by receipt.ReceiptDate DESC limit 10;, modified user: jinglejill@hotmail.com
+2018-08-06T00:02:08+07:00 executeMultiQuery: select * from Receipt where 0;select * from Branch where 0;select * from OrderTaking where 0;select * from Menu where 0;select * from MenuType where 0;select * from OrderNote where 0;select * from Note where 0;select * from NoteType where 0;
+2018-08-06T00:02:08+07:00 file: JMMReceiptMaxModifiedDateGetList.php, user: jinglejill@hotmail.com
+2018-08-06T00:02:08+07:00 Param=Value: memberID=3&modifiedDate=2018-08-06 00:00:37  0000&modifiedDeviceToken=5286f1867af1269a190ffba95b265cf5a806e35ef9cdd800f980423c581ea5db&modifiedUser=jinglejill@hotmail.com&
+2018-08-06T00:02:08+07:00 query: selected row count = 0, sql: select * from receipt where memberID = '3' and modifiedDate > '2018-08-06 00:00:37  0000';, modified user: jinglejill@hotmail.com
+2018-08-06T00:02:08+07:00 executeMultiQuery: select * from Receipt where 0;select * from Branch where 0;select * from OrderTaking where 0;select * from Menu where 0;select * from MenuType where 0;select * from OrderNote where 0;select * from Note where 0;select * from NoteType where 0;
+2018-08-06T01:11:14+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T01:11:14+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T01:11:14+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T01:11:19+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T01:11:19+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T01:11:19+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T01:11:19+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 01:11:24  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T01:11:19+07:00 set auto commit to off
+2018-08-06T01:11:19+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 01:11:24  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:19+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T01:11:19+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:22+07:00 file: JMMReceiptSummaryGetList.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:22+07:00 Param=Value: receiptDate=2018-08-05 16:33:07  0000&memberID=2&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T01:11:22+07:00 query: selected row count = 0, sql: select * from receipt where memberID = '2' and receiptDate < '2018-08-05 16:33:07  0000' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:22+07:00 executeMultiQuery: select * from Receipt where 0;select * from Branch where 0;select * from OrderTaking where 0;select * from Menu where 0;select * from MenuType where 0;select * from OrderNote where 0;select * from Note where 0;select * from NoteType where 0;
+2018-08-06T01:11:23+07:00 file: JMMReceiptMaxModifiedDateGetList.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:23+07:00 Param=Value: memberID=2&modifiedDate=2018-08-05 16:33:07  0000&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T01:11:23+07:00 query: selected row count = 0, sql: select * from receipt where memberID = '2' and modifiedDate > '2018-08-05 16:33:07  0000';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T01:11:23+07:00 executeMultiQuery: select * from Receipt where 0;select * from Branch where 0;select * from OrderTaking where 0;select * from Menu where 0;select * from MenuType where 0;select * from OrderNote where 0;select * from Note where 0;select * from NoteType where 0;
+2018-08-06T14:35:11+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:35:11+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:35:11+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:35:30+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:35:30+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:35:30+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:35:30+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 14:35:36  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T14:35:30+07:00 set auto commit to off
+2018-08-06T14:35:30+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 14:35:36  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:35:30+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T14:35:30+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:05+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:37:05+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:37:05+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:37:07+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:37:07+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:37:07+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:37:07+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 14:37:13  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T14:37:07+07:00 set auto commit to off
+2018-08-06T14:37:07+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 14:37:13  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:37:07+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T14:37:07+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:52+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:38:52+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:38:52+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:38:54+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:38:54+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:38:54+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:38:54+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 14:38:59  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T14:38:54+07:00 set auto commit to off
+2018-08-06T14:38:54+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 14:38:59  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:38:54+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T14:38:54+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:03+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:03+07:00 Param=Value: decyptedMessage=F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:39:03+07:00 query success, sql: select aes_decrypt(unhex(''),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:03+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:03+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from CustomerTable where 0;
+2018-08-06T14:39:42+07:00 file: JMMWriteLog.php, user: (null)
+2018-08-06T14:39:42+07:00 
+Param=Value: stackTrace=thidaporn.kijkamjai@gmail.com,e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9
+*** -[__NSArrayM objectAtIndexedSubscript:]: index 1 beyond bounds [0 .. 0]
+0   CoreFoundation                      0x0000000181d6f17c <redacted>   148
+1   libobjc.A.dylib                     0x0000000180fb8528 objc_exception_throw   56
+2   CoreFoundation                      0x0000000181d07c9c _CFArgv   0
+3   CoreFoundation                      0x0000000181cf4dd8 <redacted>   0
+4   Jummum2                             0x00000001023e9a94 -[QRCodeScanTableViewController itemsDownloaded:manager:]   196
+5   Jummum2                             0x00000001023673f4 -[HomeModel URLSession:dataTask:didReceiveData:]   4768
+6   CFNetwork                           0x00000001824ab970 <redacted>   36
+7   Foundation                          0x0000000182745ba0 <redacted>   16
+8   Foundation                          0x0000000182685894 <redacted>   72
+9   Foundation                          0x00000001826754c4 <redacted>   848
+10  libdispatch.dylib                   0x000000010343d28c _dispatch_client_callout   16
+11  libdispatch.dylib                   0x00000001034499e4 _dispatch_block_invoke_direct   268
+12  libdispatch.dylib                   0x000000010343d28c _dispatch_client_callout   16
+13  libdispatch.dylib                   0x00000001034499e4 _dispatch_block_invoke_direct   268
+14  libdispatch.dylib                   0x00000001034498a4 dispatch_block_perform   104
+15  Foundation                          0x0000000182747878 <redacted>   376
+16  libdispatch.dylib                   0x000000010343d28c _dispatch_client_callout   16
+17  libdispatch.dylib                   0x0000000103441ea0 _dispatch_main_queue_callback_4CF   1196
+18  CoreFoundation                      0x0000000181d17344 <redacted>   12
+19  CoreFoundation                      0x0000000181d14f20 <redacted>   2012
+20  CoreFoundation                      0x0000000181c34c58 CFRunLoopRunSpecific   436
+21  GraphicsServices                    0x0000000183ae0f84 GSEventRunModal   100
+22  UIKit                               0x000000018b38d5c4 UIApplicationMain   236
+23  Jummum2                             0x00000001023e491c main   124
+24  libdyld.dylib                       0x000000018175456c <redacted>   4&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&actionScreen=Logging&
+2018-08-06T14:39:42+07:00 
+fail with exception: thidaporn.kijkamjai@gmail.com,e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9
+*** -[__NSArrayM objectAtIndexedSubscript:]: index 1 beyond bounds [0 .. 0]
+0   CoreFoundation                      0x0000000181d6f17c <redacted>   148
+1   libobjc.A.dylib                     0x0000000180fb8528 objc_exception_throw   56
+2   CoreFoundation                      0x0000000181d07c9c _CFArgv   0
+3   CoreFoundation                      0x0000000181cf4dd8 <redacted>   0
+4   Jummum2                             0x00000001023e9a94 -[QRCodeScanTableViewController itemsDownloaded:manager:]   196
+5   Jummum2                             0x00000001023673f4 -[HomeModel URLSession:dataTask:didReceiveData:]   4768
+6   CFNetwork                           0x00000001824ab970 <redacted>   36
+7   Foundation                          0x0000000182745ba0 <redacted>   16
+8   Foundation                          0x0000000182685894 <redacted>   72
+9   Foundation                          0x00000001826754c4 <redacted>   848
+10  libdispatch.dylib                   0x000000010343d28c _dispatch_client_callout   16
+11  libdispatch.dylib                   0x00000001034499e4 _dispatch_block_invoke_direct   268
+12  libdispatch.dylib                   0x000000010343d28c _dispatch_client_callout   16
+13  libdispatch.dylib                   0x00000001034499e4 _dispatch_block_invoke_direct   268
+14  libdispatch.dylib                   0x00000001034498a4 dispatch_block_perform   104
+15  Foundation                          0x0000000182747878 <redacted>   376
+16  libdispatch.dylib                   0x000000010343d28c _dispatch_client_callout   16
+17  libdispatch.dylib                   0x0000000103441ea0 _dispatch_main_queue_callback_4CF   1196
+18  CoreFoundation                      0x0000000181d17344 <redacted>   12
+19  CoreFoundation                      0x0000000181d14f20 <redacted>   2012
+20  CoreFoundation                      0x0000000181c34c58 CFRunLoopRunSpecific   436
+21  GraphicsServices                    0x0000000183ae0f84 GSEventRunModal   100
+22  UIKit                               0x000000018b38d5c4 UIApplicationMain   236
+23  Jummum2                             0x00000001023e491c main   124
+24  libdyld.dylib                       0x000000018175456c <redacted>   4
+2018-08-06T14:39:42+07:00 query success, sql: select Value from Setting where keyName = 'DeviceTokenAdmin', modified user: (null)
+2018-08-06T14:39:42+07:00 send push to device: 1ce79f5e1050297559c80ee3ba9b94bbadbcda80ec772eff22586ad0f14e29f0, body: {"alert":"Error occur, time:2018\/08\/06 14:39:42","sound":"default"}
+2018-08-06T14:39:42+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:39:42+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:39:42+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:39:44+07:00 push notification: success, device token : 1ce79f5e1050297559c80ee3ba9b94bbadbcda80ec772eff22586ad0f14e29f0, payload: {"alert":"Error occur, time:2018\/08\/06 14:39:42","sound":"default"}
+2018-08-06T14:39:44+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:39:44+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:39:44+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:39:44+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 14:39:50  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T14:39:44+07:00 set auto commit to off
+2018-08-06T14:39:44+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 14:39:50  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:44+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T14:39:44+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:48+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:48+07:00 Param=Value: decyptedMessage=F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:39:48+07:00 query success, sql: select aes_decrypt(unhex(''),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:48+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:39:48+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from CustomerTable where 0;
+2018-08-06T14:44:19+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:44:19+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:44:19+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:44:20+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:44:20+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:44:20+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:44:20+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 14:44:26  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T14:44:20+07:00 set auto commit to off
+2018-08-06T14:44:20+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 14:44:26  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:20+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T14:44:20+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:26+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:26+07:00 Param=Value: decryptedMessage=F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:44:26+07:00 query success, sql: select aes_decrypt(unhex('F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:26+07:00 query success, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '1';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:26+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '1';select 1 as BranchID, JUMMUM_OM_MAMARIN7.CustomerTable.* from JUMMUM_OM_MAMARIN7.CustomerTable;
+2018-08-06T14:44:33+07:00 file: JMMMenuGetList.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:33+07:00 Param=Value: branchID=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:44:33+07:00 query success, sql: select * from JUMMUM_OM.branch where BranchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:33+07:00 query success, sql: select * from JUMMUM_OM_MAMARIN7.Setting where keyName = 'customerOrderStatus', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:33+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:33+07:00 sql = select 1 as Text;select '1' BranchID, JUMMUM_OM_MAMARIN7.menu.* from JUMMUM_OM_MAMARIN7.menu where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.menuType.* from JUMMUM_OM_MAMARIN7.menuType where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.note.* from JUMMUM_OM_MAMARIN7.note where Status = 1;select '1' BranchID, '1' BranchID, JUMMUM_OM_MAMARIN7.notetype.* from JUMMUM_OM_MAMARIN7.notetype where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.specialPriceProgram.* from JUMMUM_OM_MAMARIN7.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');
+2018-08-06T14:44:33+07:00 executeMultiQuery: select 1 as Text;select '1' BranchID, JUMMUM_OM_MAMARIN7.menu.* from JUMMUM_OM_MAMARIN7.menu where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.menuType.* from JUMMUM_OM_MAMARIN7.menuType where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.note.* from JUMMUM_OM_MAMARIN7.note where Status = 1;select '1' BranchID, '1' BranchID, JUMMUM_OM_MAMARIN7.notetype.* from JUMMUM_OM_MAMARIN7.notetype where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.specialPriceProgram.* from JUMMUM_OM_MAMARIN7.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');
+2018-08-06T14:44:33+07:00 file: downloadImage.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:33+07:00 file: downloadImage.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:33+07:00 Param=Value: imageFileName=shrimpChilli.jpg&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&type=1&branchID=1&
+2018-08-06T14:44:33+07:00 Param=Value: imageFileName=pizzaHamMushroom.jpg&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&type=1&branchID=1&
+2018-08-06T14:44:33+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:33+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:34+07:00 file: downloadImage.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:34+07:00 Param=Value: imageFileName=yentafo.jpg&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&type=1&branchID=1&
+2018-08-06T14:44:34+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:34+07:00 file: downloadImage.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:34+07:00 Param=Value: imageFileName=salmonSashimi.jpg&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&type=1&branchID=1&
+2018-08-06T14:44:34+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:34+07:00 file: downloadImage.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:44:34+07:00 Param=Value: imageFileName=pancake.jpg&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&type=1&branchID=1&
+2018-08-06T14:44:34+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:10+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:51:10+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:51:10+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:51:11+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:51:11+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:51:11+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:51:12+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 14:51:17  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T14:51:12+07:00 set auto commit to off
+2018-08-06T14:51:12+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 14:51:17  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:51:12+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T14:51:12+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:03+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:03+07:00 Param=Value: decryptedMessage=F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:52:03+07:00 query success, sql: select aes_decrypt(unhex('F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:03+07:00 query success, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '1';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:03+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '1';select 1 as BranchID, JUMMUM_OM_MAMARIN7.CustomerTable.* from JUMMUM_OM_MAMARIN7.CustomerTable;
+2018-08-06T14:52:07+07:00 file: JMMMenuGetList.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:07+07:00 Param=Value: branchID=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:52:07+07:00 query success, sql: select * from JUMMUM_OM.branch where BranchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:07+07:00 query success, sql: select * from JUMMUM_OM_MAMARIN7.Setting where keyName = 'customerOrderStatus', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:07+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:07+07:00 sql = select 1 as Text;select '1' BranchID, JUMMUM_OM_MAMARIN7.menu.* from JUMMUM_OM_MAMARIN7.menu where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.menuType.* from JUMMUM_OM_MAMARIN7.menuType where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.note.* from JUMMUM_OM_MAMARIN7.note where Status = 1;select '1' BranchID, '1' BranchID, JUMMUM_OM_MAMARIN7.notetype.* from JUMMUM_OM_MAMARIN7.notetype where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.specialPriceProgram.* from JUMMUM_OM_MAMARIN7.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');
+2018-08-06T14:52:07+07:00 executeMultiQuery: select 1 as Text;select '1' BranchID, JUMMUM_OM_MAMARIN7.menu.* from JUMMUM_OM_MAMARIN7.menu where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.menuType.* from JUMMUM_OM_MAMARIN7.menuType where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.note.* from JUMMUM_OM_MAMARIN7.note where Status = 1;select '1' BranchID, '1' BranchID, JUMMUM_OM_MAMARIN7.notetype.* from JUMMUM_OM_MAMARIN7.notetype where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.specialPriceProgram.* from JUMMUM_OM_MAMARIN7.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');
+2018-08-06T14:52:16+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:16+07:00 Param=Value: decryptedMessage=F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:52:16+07:00 query success, sql: select aes_decrypt(unhex('F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:16+07:00 query success, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '1';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:16+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '1';select 1 as BranchID, JUMMUM_OM_MAMARIN7.CustomerTable.* from JUMMUM_OM_MAMARIN7.CustomerTable;
+2018-08-06T14:52:16+07:00 file: JMMMenuGetList.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:16+07:00 Param=Value: branchID=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:52:16+07:00 query success, sql: select * from JUMMUM_OM.branch where BranchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:16+07:00 query success, sql: select * from JUMMUM_OM_MAMARIN7.Setting where keyName = 'customerOrderStatus', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:16+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:16+07:00 sql = select 1 as Text;select '1' BranchID, JUMMUM_OM_MAMARIN7.menu.* from JUMMUM_OM_MAMARIN7.menu where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.menuType.* from JUMMUM_OM_MAMARIN7.menuType where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.note.* from JUMMUM_OM_MAMARIN7.note where Status = 1;select '1' BranchID, '1' BranchID, JUMMUM_OM_MAMARIN7.notetype.* from JUMMUM_OM_MAMARIN7.notetype where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.specialPriceProgram.* from JUMMUM_OM_MAMARIN7.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');
+2018-08-06T14:52:16+07:00 executeMultiQuery: select 1 as Text;select '1' BranchID, JUMMUM_OM_MAMARIN7.menu.* from JUMMUM_OM_MAMARIN7.menu where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.menuType.* from JUMMUM_OM_MAMARIN7.menuType where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.note.* from JUMMUM_OM_MAMARIN7.note where Status = 1;select '1' BranchID, '1' BranchID, JUMMUM_OM_MAMARIN7.notetype.* from JUMMUM_OM_MAMARIN7.notetype where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.specialPriceProgram.* from JUMMUM_OM_MAMARIN7.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');
+2018-08-06T14:52:26+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:26+07:00 Param=Value: decryptedMessage=http://en.m.wikipedia.org&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:52:26+07:00 query success, sql: select aes_decrypt(unhex('http://en.m.wikipedia.org'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:26+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:52:26+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from CustomerTable where 0;
+2018-08-06T14:57:03+07:00 file: JMMWriteLog.php, user: (null)
+2018-08-06T14:57:03+07:00 
+Param=Value: stackTrace=thidaporn.kijkamjai@gmail.com,e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9
+*** -[__NSArrayM objectAtIndexedSubscript:]: index 1 beyond bounds [0 .. 0]
+0   CoreFoundation                      0x0000000181d6f17c <redacted>   148
+1   libobjc.A.dylib                     0x0000000180fb8528 objc_exception_throw   56
+2   CoreFoundation                      0x0000000181d07c9c _CFArgv   0
+3   CoreFoundation                      0x0000000181cf4dd8 <redacted>   0
+4   Jummum2                             0x0000000103071aa0 -[QRCodeScanTableViewController itemsDownloaded:manager:]   196
+5   Jummum2                             0x0000000102fef71c -[HomeModel URLSession:dataTask:didReceiveData:]   4768
+6   CFNetwork                           0x00000001824ab970 <redacted>   36
+7   Foundation                          0x0000000182745ba0 <redacted>   16
+8   Foundation                          0x0000000182685894 <redacted>   72
+9   Foundation                          0x00000001826754c4 <redacted>   848
+10  libdispatch.dylib                   0x00000001040c128c _dispatch_client_callout   16
+11  libdispatch.dylib                   0x00000001040cd9e4 _dispatch_block_invoke_direct   268
+12  libdispatch.dylib                   0x00000001040c128c _dispatch_client_callout   16
+13  libdispatch.dylib                   0x00000001040cd9e4 _dispatch_block_invoke_direct   268
+14  libdispatch.dylib                   0x00000001040cd8a4 dispatch_block_perform   104
+15  Foundation                          0x0000000182747878 <redacted>   376
+16  libdispatch.dylib                   0x00000001040c128c _dispatch_client_callout   16
+17  libdispatch.dylib                   0x00000001040c5ea0 _dispatch_main_queue_callback_4CF   1196
+18  CoreFoundation                      0x0000000181d17344 <redacted>   12
+19  CoreFoundation                      0x0000000181d14f20 <redacted>   2012
+20  CoreFoundation                      0x0000000181c34c58 CFRunLoopRunSpecific   436
+21  GraphicsServices                    0x0000000183ae0f84 GSEventRunModal   100
+22  UIKit                               0x000000018b38d5c4 UIApplicationMain   236
+23  Jummum2                             0x000000010306cc44 main   124
+24  libdyld.dylib                       0x000000018175456c <redacted>   4&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&actionScreen=Logging&
+2018-08-06T14:57:03+07:00 
+fail with exception: thidaporn.kijkamjai@gmail.com,e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9
+*** -[__NSArrayM objectAtIndexedSubscript:]: index 1 beyond bounds [0 .. 0]
+0   CoreFoundation                      0x0000000181d6f17c <redacted>   148
+1   libobjc.A.dylib                     0x0000000180fb8528 objc_exception_throw   56
+2   CoreFoundation                      0x0000000181d07c9c _CFArgv   0
+3   CoreFoundation                      0x0000000181cf4dd8 <redacted>   0
+4   Jummum2                             0x0000000103071aa0 -[QRCodeScanTableViewController itemsDownloaded:manager:]   196
+5   Jummum2                             0x0000000102fef71c -[HomeModel URLSession:dataTask:didReceiveData:]   4768
+6   CFNetwork                           0x00000001824ab970 <redacted>   36
+7   Foundation                          0x0000000182745ba0 <redacted>   16
+8   Foundation                          0x0000000182685894 <redacted>   72
+9   Foundation                          0x00000001826754c4 <redacted>   848
+10  libdispatch.dylib                   0x00000001040c128c _dispatch_client_callout   16
+11  libdispatch.dylib                   0x00000001040cd9e4 _dispatch_block_invoke_direct   268
+12  libdispatch.dylib                   0x00000001040c128c _dispatch_client_callout   16
+13  libdispatch.dylib                   0x00000001040cd9e4 _dispatch_block_invoke_direct   268
+14  libdispatch.dylib                   0x00000001040cd8a4 dispatch_block_perform   104
+15  Foundation                          0x0000000182747878 <redacted>   376
+16  libdispatch.dylib                   0x00000001040c128c _dispatch_client_callout   16
+17  libdispatch.dylib                   0x00000001040c5ea0 _dispatch_main_queue_callback_4CF   1196
+18  CoreFoundation                      0x0000000181d17344 <redacted>   12
+19  CoreFoundation                      0x0000000181d14f20 <redacted>   2012
+20  CoreFoundation                      0x0000000181c34c58 CFRunLoopRunSpecific   436
+21  GraphicsServices                    0x0000000183ae0f84 GSEventRunModal   100
+22  UIKit                               0x000000018b38d5c4 UIApplicationMain   236
+23  Jummum2                             0x000000010306cc44 main   124
+24  libdyld.dylib                       0x000000018175456c <redacted>   4
+2018-08-06T14:57:03+07:00 query success, sql: select Value from Setting where keyName = 'DeviceTokenAdmin', modified user: (null)
+2018-08-06T14:57:03+07:00 send push to device: 1ce79f5e1050297559c80ee3ba9b94bbadbcda80ec772eff22586ad0f14e29f0, body: {"alert":"Error occur, time:2018\/08\/06 14:57:03","sound":"default"}
+2018-08-06T14:57:03+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:57:03+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:57:03+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:57:04+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T14:57:04+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T14:57:04+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T14:57:04+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 14:57:10  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T14:57:04+07:00 set auto commit to off
+2018-08-06T14:57:04+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 14:57:10  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:04+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T14:57:04+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:05+07:00 push notification: success, device token : 1ce79f5e1050297559c80ee3ba9b94bbadbcda80ec772eff22586ad0f14e29f0, payload: {"alert":"Error occur, time:2018\/08\/06 14:57:03","sound":"default"}
+2018-08-06T14:57:12+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:12+07:00 Param=Value: decryptedMessage=F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:57:12+07:00 query success, sql: select aes_decrypt(unhex('F0965EDD3A8192EEE707F66A4453D953C27E889C1B0126962AE989563CCFC774'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:12+07:00 query success, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '1';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:12+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '1';select 1 as BranchID, JUMMUM_OM_MAMARIN7.CustomerTable.* from JUMMUM_OM_MAMARIN7.CustomerTable;
+2018-08-06T14:57:12+07:00 file: JMMMenuGetList.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:12+07:00 Param=Value: branchID=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:57:12+07:00 query success, sql: select * from JUMMUM_OM.branch where BranchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:12+07:00 query success, sql: select * from JUMMUM_OM_MAMARIN7.Setting where keyName = 'customerOrderStatus', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:12+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:12+07:00 sql = select 1 as Text;select '1' BranchID, JUMMUM_OM_MAMARIN7.menu.* from JUMMUM_OM_MAMARIN7.menu where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.menuType.* from JUMMUM_OM_MAMARIN7.menuType where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.note.* from JUMMUM_OM_MAMARIN7.note where Status = 1;select '1' BranchID, '1' BranchID, JUMMUM_OM_MAMARIN7.notetype.* from JUMMUM_OM_MAMARIN7.notetype where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.specialPriceProgram.* from JUMMUM_OM_MAMARIN7.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');
+2018-08-06T14:57:12+07:00 executeMultiQuery: select 1 as Text;select '1' BranchID, JUMMUM_OM_MAMARIN7.menu.* from JUMMUM_OM_MAMARIN7.menu where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.menuType.* from JUMMUM_OM_MAMARIN7.menuType where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.note.* from JUMMUM_OM_MAMARIN7.note where Status = 1;select '1' BranchID, '1' BranchID, JUMMUM_OM_MAMARIN7.notetype.* from JUMMUM_OM_MAMARIN7.notetype where Status = 1;select '1' BranchID, JUMMUM_OM_MAMARIN7.specialPriceProgram.* from JUMMUM_OM_MAMARIN7.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');
+2018-08-06T14:57:23+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:23+07:00 Param=Value: decryptedMessage=http://en.m.wikipedia.org&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:57:23+07:00 query success, sql: select aes_decrypt(unhex('http://en.m.wikipedia.org'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:23+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:23+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from branch where 0;
+2018-08-06T14:57:29+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:29+07:00 Param=Value: decryptedMessage=http://en.m.wikipedia.org&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:57:29+07:00 query success, sql: select aes_decrypt(unhex('http://en.m.wikipedia.org'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:29+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:29+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from branch where 0;
+2018-08-06T14:57:33+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:33+07:00 Param=Value: decryptedMessage=http://en.m.wikipedia.org&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T14:57:33+07:00 query success, sql: select aes_decrypt(unhex('http://en.m.wikipedia.org'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:33+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T14:57:33+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from branch where 0;
+2018-08-06T17:41:20+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T17:41:20+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T17:41:20+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T17:41:24+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T17:41:24+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T17:41:24+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T17:41:24+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 17:41:30  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T17:41:24+07:00 set auto commit to off
+2018-08-06T17:41:24+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 17:41:30  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:24+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T17:41:25+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:34+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:34+07:00 Param=Value: decryptedMessage=F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T17:41:34+07:00 query success, sql: select aes_decrypt(unhex('F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:34+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:34+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from branch where 0;
+2018-08-06T17:41:35+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:35+07:00 Param=Value: decryptedMessage=F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T17:41:35+07:00 query success, sql: select aes_decrypt(unhex('F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:35+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:35+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from branch where 0;
+2018-08-06T17:41:41+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:41+07:00 Param=Value: decryptedMessage=F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T17:41:41+07:00 query success, sql: select aes_decrypt(unhex('F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:41+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:41+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from branch where 0;
+2018-08-06T17:41:42+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:42+07:00 Param=Value: decryptedMessage=F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T17:41:42+07:00 query success, sql: select aes_decrypt(unhex('F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:42+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:41:42+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from branch where 0;
+2018-08-06T17:47:15+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T17:47:15+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T17:47:15+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T17:47:18+07:00 file: JMMMasterGet.php, user: (null)
+2018-08-06T17:47:18+07:00 Param=Value: modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=(null)&
+2018-08-06T17:47:18+07:00 executeMultiQuery: select * from JUMMUM.setting where type != 4;
+2018-08-06T17:47:20+07:00 file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 Param=Value: modifiedUser=thidaporn.kijkamjai@gmail.com&userAccountID=0&lineID=&birthDate=&deviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&password=37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc&fullName=&nickName=&roleID=0&username=thidaporn.kijkamjai@gmail.com&phoneNo=&modifiedDate=2018-08-06 17:47:24  0000&email=&logInID=1&status=1&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&actionScreen=validate userAccount&
+2018-08-06T17:47:20+07:00 set auto commit to off
+2018-08-06T17:47:20+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 query success, sql: INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('thidaporn.kijkamjai@gmail.com', '1', 'e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9', 'thidaporn.kijkamjai@gmail.com', '2018-08-06 17:47:24  0000'), modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 query success, sql: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 query success, sql: select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 query success, sql: select distinct BranchID from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID in (1);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 query success, sql: select * from OrderTaking where receiptID in (16);, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 query success, sql: select * from JUMMUM_OM.branch where branchID = '1', modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 query: selected row count = 0, sql: select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:20+07:00 multiQueryArray: select * from UserAccount where username = 'thidaporn.kijkamjai@gmail.com' and password = '37bc854596cb721fca1da704fd385296bf881462013f09ffd80af72f0e92b5bc';select * from receipt where memberID = '2' order by receipt.ReceiptDate DESC limit 10;select * from JUMMUM_OM.branch where branchID in (1);select * from OrderTaking where receiptID in (16);select '1' BranchID, Menu.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select '1' BranchID, MenuType.* from JUMMUM_OM_MAMARIN7.Menu left join JUMMUM_OM_MAMARIN7.menutype ON menu.MenuTypeID = menutype.MenuTypeID where menuID = '99';select OrderNote.*,OrderTaking.BranchID from OrderNote left join OrderTaking on OrderNote.orderTakingID = OrderTaking.orderTakingID where OrderNote.orderTakingID in (select orderTakingID from OrderTaking where receiptID in (16));
+2018-08-06T17:47:20+07:00 query commit, file: JMMUserAccountValidate.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:23+07:00 file: JMMBranchAndCustomerTableQRGet.php, user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:23+07:00 Param=Value: decryptedMessage=F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27&modifiedDeviceToken=e061f1a19893299f096a4c2019db5896e44a21071da6a944180ef9e7f982a4f9&modifiedUser=thidaporn.kijkamjai@gmail.com&
+2018-08-06T17:47:23+07:00 query success, sql: select aes_decrypt(unhex('F3D63C45FE03A85344BD9E8D06B58BEB374A9D7A9F84D4EAFA32E05986A72A27'),'jmmjmm') as message;, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:23+07:00 query: selected row count = 0, sql: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';, modified user: thidaporn.kijkamjai@gmail.com
+2018-08-06T17:47:23+07:00 executeMultiQuery: SELECT * FROM Branch where status = 1 and customerApp = 1 and branchID = '';select * from branch where 0;

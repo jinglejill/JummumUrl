@@ -6,12 +6,13 @@
     
     
     
-    if(isset($_POST["logInID"]) && isset($_POST["username"]) && isset($_POST["status"]) && isset($_POST["deviceToken"]) && isset($_POST["modifiedUser"]) && isset($_POST["modifiedDate"]))
+    if(isset($_POST["logInID"]) && isset($_POST["username"]) && isset($_POST["status"]) && isset($_POST["deviceToken"]) && isset($_POST["model"]) && isset($_POST["modifiedUser"]) && isset($_POST["modifiedDate"]))
     {
         $logInID = $_POST["logInID"];
         $username = $_POST["username"];
         $status = $_POST["status"];
         $deviceToken = $_POST["deviceToken"];
+        $model = $_POST["model"];
         $modifiedUser = $_POST["modifiedUser"];
         $modifiedDate = $_POST["modifiedDate"];
     }
@@ -34,7 +35,7 @@
     
     //login--------------------
     //query statement
-    $sql = "INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('$username', '$status', '$deviceToken', '$modifiedUser', '$modifiedDate')";
+    $sql = "INSERT INTO LogIn(Username, Status, DeviceToken, Model, ModifiedUser, ModifiedDate) VALUES ('$username', '$status', '$deviceToken', '$model', '$modifiedUser', '$modifiedDate')";
     $ret = doQueryTask($sql);
     if($ret != "")
     {

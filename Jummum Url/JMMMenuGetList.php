@@ -108,20 +108,19 @@
     {
         $sql = "select 0 as Text;";
     }
-    $sql .= "select '$branchID' BranchID, $dbName.menu.* from $dbName.menu where Status = 1;";
-    $sql .= "select '$branchID' BranchID, $dbName.menuType.* from $dbName.menuType where Status = 1;";
-//    $sql .= "select '$branchID' BranchID, $dbName.menuNote.* from $dbName.menuNote where 0;";
+    $sql .= "select '$branchID' BranchID, $dbName.menu.* from $dbName.menu where Status = 1 and belongToMenuID = 0;";
+    $sql .= "select '$branchID' BranchID, $dbName.menuType.* from $dbName.menu left join $dbName.menuType on $dbName.menu.menuTypeID = $dbName.menuType.menuTypeID where $dbName.menu.Status = 1 and $dbName.menuType.Status = 1 and belongToMenuID = 0;";
     $sql .= "select '$branchID' BranchID, $dbName.note.* from $dbName.note where Status = 1;";
     $sql .= "select '$branchID' BranchID, '$branchID' BranchID, $dbName.notetype.* from $dbName.notetype where Status = 1;";
-//    $sql .= "select '$branchID' BranchID, $dbName.subMenuType.* from $dbName.subMenuType where Status = 1;";
     $sql .= "select '$branchID' BranchID, $dbName.specialPriceProgram.* from $dbName.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');";
     writeToLog("sql = " . $sql);
     
     
     
     /* execute multi query */
-    $jsonEncode = executeMultiQuery($sql);
-    echo $jsonEncode;
+    $jsonEncode = executeMultiQueryArray($sql);
+    $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);
+    echo json_encode($response);
 
 
     

@@ -135,8 +135,8 @@
     {
         $sql = "select count(*) UsedCount from userPromotionUsed where promotionID = '$promotionID' and userAccountID = '$userAccountID'";
         $selectedRow = getSelectedRow($sql);
-        $usedCount = $selectedRow[0]["UsedCount"];
-        if($noOfLimitUsePerUser > 0 && $usedCount >= $noOfLimitUsePerUser)
+        $usedCountPerUser = $selectedRow[0]["UsedCount"];
+        if($noOfLimitUsePerUser > 0 && $usedCountPerUser >= $noOfLimitUsePerUser)
         {
             //คูปองส่วนลดไม่ถูกต้อง -> คุณใช้สิทธิ์ครบแล้ว
             $voucherValid = 0;
@@ -149,8 +149,8 @@
     {
         $sql = "select count(*) UsedCount from userPromotionUsed where promotionID = '$promotionID' and userAccountID = '$userAccountID' and date_format(modifiedDate,'%Y-%m-%d') = date_format(now(),'%Y-%m-%d')";
         $selectedRow = getSelectedRow($sql);
-        $usedCount = $selectedRow[0]["UsedCount"];
-        if($noOfLimitUsePerUserPerDay > 0 && $usedCount >= $noOfLimitUsePerUserPerDay)
+        $usedCountPerUserPerDay = $selectedRow[0]["UsedCount"];
+        if($noOfLimitUsePerUserPerDay > 0 && $usedCountPerUserPerDay >= $noOfLimitUsePerUserPerDay)
         {
             //คูปองส่วนลดไม่ถูกต้อง -> วันนี้คุณใช้สิทธิ์ครบแล้ว
             $voucherValid = 0;
@@ -176,7 +176,7 @@
         $sql = "select ifnull(sum(discountValue),0) SumDiscountValue from userPromotionUsed left join receipt on userPromotionUsed.receiptID = receipt.receiptID where promotionID = '$promotionID' and userAccountID = '$userAccountID' and date_format(userPromotionUsed.modifiedDate,'%Y-%m-%d') = date_format(now(),'%Y-%m-%d')";
         $selectedRow = getSelectedRow($sql);
         $sumDiscountValue = $selectedRow[0]["SumDiscountValue"];
-        if($maxDiscountAmountPerDay > 0)
+        if($maxDiscountAmountPerDay > 0)//ใช้ moreToGo แทน maxDiscount ทั้งกรณีใช้ได้ครั้งเดียวต่อวัน และหลายครั้งต่อวัน
         {
             if($sumDiscountValue >= $maxDiscountAmountPerDay)
             {
@@ -186,7 +186,17 @@
             }
             else
             {
-                $moreDiscountToGo = $maxDiscountAmountPerDay - $sumDiscountValue;
+                if($noOfLimitUsePerUserPerDay == 1 && $noOfLimitUsePerUser > 1 && $usedCountPerUser > 0)
+                {
+                    $sql = "select * from promotionDiscount where promotionID = '$promotionID' and time = ($usedCountPerUser+1)";
+                    $selectedRow = getSelectedRow($sql);
+                    $maxDiscountAmountPerDay = $selectedRow[0]["MaxDiscountAmountPerDay"];
+                    $moreDiscountToGo = $maxDiscountAmountPerDay - $sumDiscountValue;
+                }
+                else
+                {
+                    $moreDiscountToGo = $maxDiscountAmountPerDay - $sumDiscountValue;
+                }
             }
         }
         else
@@ -286,7 +296,16 @@
     
     if($voucherValid)
     {
-        $sql = "select promotion.*, $moreDiscountToGo as MoreDiscountToGo,0 PromoCodeID from promotion where voucherCode = '$voucherCode' and date_format(now(),'%Y-%m-%d') between date_format(usingStartDate,'%Y-%m-%d') and date_format(usingEndDate,'%Y-%m-%d');";
+        writeToLog("noOfLimitUsePerUserPerDay: " . $noOfLimitUsePerUserPerDay);
+        writeToLog("noOfLimitUsePerUser: " . $noOfLimitUsePerUser);
+        if($noOfLimitUsePerUserPerDay == 1 && $noOfLimitUsePerUser > 1 && $usedCountPerUser > 0)
+        {
+            $sql = "select Promotion.`PromotionID`, `MainBranchID`, `StartDate`, `EndDate`, `UsingStartDate`, `UsingEndDate`, `Header`, `SubTitle`, `ImageUrl`, PromotionDiscount.`DiscountType`, PromotionDiscount.`DiscountAmount`, `MinimumSpending`, PromotionDiscount.`MaxDiscountAmountPerDay`, `AllowEveryone`, `AllowDiscountForAllMenuType`, `DiscountMenuID`, `NoOfLimitUse`, `NoOfLimitUsePerUser`, `NoOfLimitUsePerUserPerDay`, `VoucherCode`, `TermsConditions`, `Type`, `OrderNo`, `Status`, Promotion.`ModifiedUser`, Promotion.`ModifiedDate`, $moreDiscountToGo as MoreDiscountToGo,0 PromoCodeID from promotion left join PromotionDiscount on PromotionDiscount.promotionID = PromotionDiscount.promotionID where voucherCode = '$voucherCode' and date_format(now(),'%Y-%m-%d') between date_format(usingStartDate,'%Y-%m-%d') and date_format(usingEndDate,'%Y-%m-%d') and PromotionDiscount.time = ($usedCountPerUser+1);";
+        }
+        else
+        {
+            $sql = "select promotion.*, $moreDiscountToGo as MoreDiscountToGo,0 PromoCodeID from promotion where voucherCode = '$voucherCode' and date_format(now(),'%Y-%m-%d') between date_format(usingStartDate,'%Y-%m-%d') and date_format(usingEndDate,'%Y-%m-%d');";
+        }
         $sql .= "select '' as Text;";
         $sql .= "select 1 as Text";
     }
@@ -317,8 +336,9 @@
     
     
     /* execute multi query */
-    $jsonEncode = executeMultiQuery($sql);
-    echo $jsonEncode;
+    $jsonEncode = executeMultiQueryArray($sql);
+    $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);
+    echo json_encode($response);
 
 
     

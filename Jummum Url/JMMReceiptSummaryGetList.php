@@ -5,12 +5,9 @@
     printAllPost();
 
 
-
-//    if(isset($_POST["receiptDate"]) && isset($_POST["receiptID"]) && isset($_POST["userAccountID"]))
     if(isset($_POST["receiptDate"]) && isset($_POST["memberID"]))
     {
         $receiptDate = $_POST["receiptDate"];
-//        $receiptID = $_POST["receiptID"];
         $memberID = $_POST["memberID"];
     }
     
@@ -23,10 +20,7 @@
     
     
     
-   
-    
-    
-//    $sql = "select * from receipt where memberID = '$userAccountID' and receiptDate <= '$receiptDate' and receiptID < '$receiptID' order by receipt.ReceiptDate DESC, receipt.ReceiptID DESC limit 10;";
+
     $sql = "select * from receipt where memberID = '$memberID' and receiptDate < '$receiptDate' order by receipt.ReceiptDate DESC limit 10;";
     $selectedRow = getSelectedRow($sql);
     if(sizeof($selectedRow)>0)
@@ -45,6 +39,29 @@
             }
         }
         $sqlAll = $sql;
+        
+        
+        
+        //customerTable
+        for($i=0; $i<sizeof($selectedRow); $i++)
+        {
+            $customerTableID = $selectedRow[$i]["CustomerTableID"];
+            $branchID = $selectedRow[$i]["BranchID"];
+            $sql2 = "select * from $jummumOM.branch where branchID = '$branchID'";
+            $selectedRow2 = getSelectedRow($sql2);
+            $eachDbName = $selectedRow2[0]["DbName"];
+            
+            if($i == 0)
+            {
+                $sqlCustomerTable = "select '$branchID' BranchID, CustomerTable.* from $eachDbName.CustomerTable where CustomerTableID = '$customerTableID'";
+            }
+            else
+            {
+                $sqlCustomerTable .= " union select '$branchID' BranchID, CustomerTable.* from $eachDbName.CustomerTable where CustomerTableID = '$customerTableID'";
+            }
+        }
+        $sqlCustomerTable .= ";";
+        $sqlAll .= $sqlCustomerTable;
         
         
         
@@ -152,71 +169,37 @@
             $sqlNote .= ";";
             $sqlNoteType .= ";";
         }
+        else
+        {
+            $sqlNote = "select * from Receipt where 0;";
+            $sqlNoteType = "select * from Receipt where 0;";
+        }
         $sqlAll .= $sqlNote;
         $sqlAll .= $sqlNoteType;
     }
     else
     {
         $sqlAll = "select * from Receipt where 0;";
-        $sqlAll .= "select * from Branch where 0;";
-        $sqlAll .= "select * from OrderTaking where 0;";
-        $sqlAll .= "select * from Menu where 0;";
-        $sqlAll .= "select * from MenuType where 0;";
-        $sqlAll .= "select * from OrderNote where 0;";
-        $sqlAll .= "select * from Note where 0;";
-        $sqlAll .= "select * from NoteType where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
     }
     
-    
-    
-    
-    
-//    {
-//        //menu
-//        $sql3 = "select * from OrderTaking where receiptID in ($receiptIDListInText);";
-//        $selectedRow = getSelectedRow($sql3);        
-//        if(sizeof($selectedRow)>0)
-//        {
-//            
-//            $menuID = $selectedRow[0]["MenuID"];
-//            $branchID = $selectedRow[0]["BranchID"];
-//            $sql2 = "select * from $jummumOM.branch where branchID = '$branchID'";
-//            $selectedRow2 = getSelectedRow($sql2);
-//            $eachDbName = $selectedRow2[0]["DbName"];
-//            $sql4 = "select '$branchID' BranchID, Menu.* from $eachDbName.Menu where menuID = '$menuID'";
-//            for($i=1; $i<sizeof($selectedRow); $i++)
-//            {
-//                $menuID = $selectedRow[$i]["MenuID"];
-//                $branchID = $selectedRow[$i]["BranchID"];
-//                $sql2 = "select * from $jummumOM.branch where branchID = '$branchID'";
-//                $selectedRow2 = getSelectedRow($sql2);
-//                $eachDbName = $selectedRow2[0]["DbName"];
-//                $sql4 .= " union select '$branchID' BranchID, Menu.* from $eachDbName.Menu where menuID = '$menuID'";
-//            }
-//        }
-//        
-//        
-//        $sql .= "select * from OrderTaking where receiptID in ($receiptIDListInText);";
-//        $sql .= "select * from OrderNote where orderTakingID in (select orderTakingID from OrderTaking where receiptID in ($receiptIDListInText));";
-//        $sql .= $sql4;
-//    }
-//    else
-//    {
-//        $sql .= "select * from OrderTaking where 0;";
-//        $sql .= "select * from OrderNote where 0;";
-//        $sql .= "select 0 as BranchID, Menu.* from Menu where 0;";
-//    }
-    
-    
-    
+
     
     
     
     
     
     /* execute multi query */
-    $jsonEncode = executeMultiQuery($sqlAll);
-    echo $jsonEncode;
+    $jsonEncode = executeMultiQueryArray($sqlAll);
+    $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);
+    echo json_encode($response);
     
     
     

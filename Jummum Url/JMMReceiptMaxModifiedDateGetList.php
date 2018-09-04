@@ -14,7 +14,6 @@
     {
         $memberID = $_POST["memberID"];
         $modifiedDate = $_POST["modifiedDate"];
-//        $receiptDate = $_POST["receiptDate"];
     }
     
     
@@ -70,6 +69,30 @@
             }
         }
         $sqlAll = $sql;
+        
+        
+        
+        //customerTable
+        for($i=0; $i<sizeof($selectedRow); $i++)
+        {
+            $customerTableID = $selectedRow[$i]["CustomerTableID"];
+            $branchID = $selectedRow[$i]["BranchID"];
+            $sql2 = "select * from $jummumOM.branch where branchID = '$branchID'";
+            $selectedRow2 = getSelectedRow($sql2);
+            $eachDbName = $selectedRow2[0]["DbName"];
+            
+            if($i == 0)
+            {
+                $sqlCustomerTable = "select '$branchID' BranchID, CustomerTable.* from $eachDbName.CustomerTable where CustomerTableID = '$customerTableID'";
+            }
+            else
+            {
+                $sqlCustomerTable .= " union select '$branchID' BranchID, CustomerTable.* from $eachDbName.CustomerTable where CustomerTableID = '$customerTableID'";
+            }
+        }
+        $sqlCustomerTable .= ";";
+        $sqlAll .= $sqlCustomerTable;
+        
         
         
         
@@ -177,35 +200,38 @@
             $sqlNote .= ";";
             $sqlNoteType .= ";";
         }
+        else
+        {
+            $sqlNote = "select * from Receipt where 0;";
+            $sqlNoteType = "select * from Receipt where 0;";
+        }
         $sqlAll .= $sqlNote;
         $sqlAll .= $sqlNoteType;
     }
     else
     {
         $sqlAll = "select * from Receipt where 0;";
-        $sqlAll .= "select * from Branch where 0;";
-        $sqlAll .= "select * from OrderTaking where 0;";
-        $sqlAll .= "select * from Menu where 0;";
-        $sqlAll .= "select * from MenuType where 0;";
-        $sqlAll .= "select * from OrderNote where 0;";
-        $sqlAll .= "select * from Note where 0;";
-        $sqlAll .= "select * from NoteType where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        
     }
+    
+
     
 
     
     
     
-    
-    
-    
-    
-    
-    
-    
     /* execute multi query */
-    $jsonEncode = executeMultiQuery($sqlAll);
-    echo $jsonEncode;
+    $jsonEncode = executeMultiQueryArray($sqlAll);
+    $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);
+    echo json_encode($response);
 
 
     

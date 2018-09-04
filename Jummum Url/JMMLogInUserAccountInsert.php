@@ -6,12 +6,13 @@
     
     
     
-    if(isset($_POST["logInID"]) && isset($_POST["username"]) && isset($_POST["status"]) && isset($_POST["deviceToken"]) && isset($_POST["modifiedUser"]) && isset($_POST["modifiedDate"]))
+    if(isset($_POST["logInID"]) && isset($_POST["username"]) && isset($_POST["status"]) && isset($_POST["deviceToken"]) && isset($_POST["model"]) && isset($_POST["modifiedUser"]) && isset($_POST["modifiedDate"]))
     {
         $logInID = $_POST["logInID"];
         $username = $_POST["username"];
         $status = $_POST["status"];
         $deviceToken = $_POST["deviceToken"];
+        $model = $_POST["model"];
         $modifiedUser = $_POST["modifiedUser"];
         $modifiedDate = $_POST["modifiedDate"];
     }
@@ -31,7 +32,6 @@
         $modifiedUser = $_POST["modifiedUser"];
         $modifiedDate = $_POST["modifiedDate"];
     }
-
     
     
     // Check connection
@@ -50,7 +50,7 @@
     
     //login--------------------
     //query statement
-    $sql = "INSERT INTO LogIn(Username, Status, DeviceToken, ModifiedUser, ModifiedDate) VALUES ('$username', '$status', '$deviceToken', '$modifiedUser', '$modifiedDate')";
+    $sql = "INSERT INTO LogIn(Username, Status, DeviceToken, Model, ModifiedUser, ModifiedDate) VALUES ('$username', '$status', '$deviceToken', '$model', '$modifiedUser', '$modifiedDate')";
     $ret = doQueryTask($sql);
     if($ret != "")
     {
@@ -84,7 +84,7 @@
     
     
     //userAccount
-    $sql = "select *, 1 IdInserted from UserAccount where username = '$username';";
+    $sql = "select * from UserAccount where username = '$username';";
     $selectedRow = getSelectedRow($sql);
     $userAccountID = $selectedRow[0]["UserAccountID"];
     $sqlAll = $sql;
@@ -110,6 +110,30 @@
             }
         }
         $sqlAll .= $sql;
+        
+        
+        
+        //customerTable
+        for($i=0; $i<sizeof($selectedRow); $i++)
+        {
+            $customerTableID = $selectedRow[$i]["CustomerTableID"];
+            $branchID = $selectedRow[$i]["BranchID"];
+            $sql2 = "select * from $jummumOM.branch where branchID = '$branchID'";
+            $selectedRow2 = getSelectedRow($sql2);
+            $eachDbName = $selectedRow2[0]["DbName"];
+            
+            if($i == 0)
+            {
+                $sqlCustomerTable = "select '$branchID' BranchID, CustomerTable.* from $eachDbName.CustomerTable where CustomerTableID = '$customerTableID'";
+            }
+            else
+            {
+                $sqlCustomerTable .= " union select '$branchID' BranchID, CustomerTable.* from $eachDbName.CustomerTable where CustomerTableID = '$customerTableID'";
+            }
+        }
+        $sqlCustomerTable .= ";";
+        $sqlAll .= $sqlCustomerTable;
+        
         
         
         
@@ -218,19 +242,30 @@
             $sqlNote .= ";";
             $sqlNoteType .= ";";
         }
+        else
+        {
+            $sqlNote = "select * from Receipt where 0;";
+            $sqlNoteType = "select * from Receipt where 0;";
+        }
         $sqlAll .= $sqlNote;
         $sqlAll .= $sqlNoteType;
+        
+        
+        
+        
+        
     }
     else
     {
         $sqlAll .= "select * from Receipt where 0;";
-        $sqlAll .= "select * from Branch where 0;";
-        $sqlAll .= "select * from OrderTaking where 0;";
-        $sqlAll .= "select * from Menu where 0;";
-        $sqlAll .= "select * from MenuType where 0;";
-        $sqlAll .= "select * from OrderNote where 0;";
-        $sqlAll .= "select * from Note where 0;";
-        $sqlAll .= "select * from NoteType where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
+        $sqlAll .= "select * from Receipt where 0;";
     }
     
     

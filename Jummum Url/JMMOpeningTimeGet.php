@@ -25,12 +25,12 @@
     
     $sql = "select * from $jummumOM.branch where branchID = '$branchID'";
     $selectedRow = getSelectedRow($sql);
-    $selectedDbName = $selectedRow[0]["DbName"];
+    $dbName = $selectedRow[0]["DbName"];
     
     
 
     $inOpeningTime = 0;
-    $sql = "select * from $selectedDbName.Setting where keyName = 'customerOrderStatus'";
+    $sql = "select * from $dbName.Setting where keyName = 'customerOrderStatus'";
     $selectedRow = getSelectedRow($sql);
     $customerOrderStatus = $selectedRow[0]["Value"];
     if($customerOrderStatus == 1)
@@ -47,7 +47,7 @@
         $strDate = date("Y-m-d");
         $currentDate = date("Y-m-d H:i:s");
         $dayOfWeek = date('w', strtotime($strDate));
-        $sql = "select * from $selectedDbName.OpeningTime where day = '$dayOfWeek' order by day,shiftNo";
+        $sql = "select * from $dbName.OpeningTime where day = '$dayOfWeek' order by day,shiftNo";
         $selectedRow = getSelectedRow($sql);
         
         for($i=0; $i<sizeof($selectedRow); $i++)
@@ -84,7 +84,6 @@
     }
     
     
-    
     if($inOpeningTime)
     {
         $sql = "select 1 as Text;";
@@ -94,9 +93,18 @@
         $sql = "select 0 as Text;";
     }
     
+    $sql .= "select '$branchID' BranchID, $dbName.menu.* from $dbName.menu where Status = 1;";
+    $sql .= "select '$branchID' BranchID, $dbName.menuType.* from $dbName.menuType where Status = 1;";
+    $sql .= "select '$branchID' BranchID, $dbName.note.* from $dbName.note where Status = 1;";
+    $sql .= "select '$branchID' BranchID, '$branchID' BranchID, $dbName.notetype.* from $dbName.notetype where Status = 1;";
+    $sql .= "select '$branchID' BranchID, $dbName.specialPriceProgram.* from $dbName.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');";
+    
+    
+    
     /* execute multi query */
-    $jsonEncode = executeMultiQuery($sql);
-    echo $jsonEncode;
+    $jsonEncode = executeMultiQueryArray($sql);
+    $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);
+    echo json_encode($response);
     
     
     

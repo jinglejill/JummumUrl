@@ -57,7 +57,7 @@
     if(sizeof($selectedRow)>0)
     {
         $eachDbName = $selectedRow[0]["DbName"];
-        $sqlCustomerTable = "select $branchID as BranchID, $eachDbName.CustomerTable.* from $eachDbName.CustomerTable";
+        $sqlCustomerTable = "select $branchID as BranchID, $eachDbName.CustomerTable.* from $eachDbName.CustomerTable where customerTableID = '$customerTableID'";
     }
     else
     {
@@ -68,9 +68,9 @@
     
     
     /* execute multi query */
-    $jsonEncode = executeMultiQuery($sql);
-    echo $jsonEncode;
-
+    $jsonEncode = executeMultiQueryArray($sql);
+    $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);
+    echo json_encode($response);
 
     
     // Close connections

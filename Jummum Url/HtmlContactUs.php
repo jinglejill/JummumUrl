@@ -18,7 +18,7 @@
 <div class="page" title="Page 1">
     <div class="layoutArea">
         <div class="column">
-<p>&nbsp;<img class="" src="http://www.jummum.co/<?=$jummumPath?>Image/jummumLogo.png" alt="" width="120" /></p>
+<p>&nbsp;<img class="" src="./Image/jummumLogo.png" alt="" width="120" /></p>
             <p>&nbsp;</p>
             <p style="color:FF3C4B;font-size: 28px"><strong>Contact no. : </strong><span style="color:464646">081-307-2993, 089-1212-882</span></p>
             <p style="color:FF3C4B;font-size: 28px"><strong>Email : </strong><span style="color:464646">hello@jummum.co</span></p>

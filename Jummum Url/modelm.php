@@ -93,7 +93,31 @@
         $implement .= "<br>";
         
         
-
+        //dictionary method
+        $dicMethod .= "- (NSDictionary *)dictionary<br>";
+        $dicMethod .= "{<br>";
+        $dicMethod .= tab() . "return [NSDictionary dictionaryWithObjectsAndKeys:<br>";
+        for($j=0;$j<sizeof($dbColumnName);$j++)
+        {
+            if($dbColumnType[$j] == 12)//date
+            {
+                $dicMethod .= tab() . tab() . '[Utility dateToString:[self valueForKey:@"' . makeFirstLetterLowerCase($dbColumnName[$j]) . '"] toFormat:@"yyyy-MM-dd HH:mm:ss"],@"' . makeFirstLetterLowerCase($dbColumnName[$j]) . '",<br>';
+            }
+            else
+            {
+                $dicMethod .= tab() . tab() . '[self valueForKey:@"' . makeFirstLetterLowerCase($dbColumnName[$j]) . '"]?[self valueForKey:@"' . makeFirstLetterLowerCase($dbColumnName[$j]) . '"]:[NSNull null],@"' . makeFirstLetterLowerCase($dbColumnName[$j]) . '",<br>';
+            }
+            
+        }
+        $dicMethod .= tab() . tab() . 'nil];<br>';
+        $dicMethod .= "}";
+        $initMethod .= "<br>";
+        $initMethod .= "<br>";
+        
+        
+        
+        
+        
         //init method
         $initMethod .= "-(" . getTableNameFromPrimaryKey($primaryKey) . " *)initWith";
         
@@ -265,9 +289,7 @@
             {
                 $copyWithZone .= tab() . tab() . "[copy set" . $dbColumnName[$j] . ":self." . makeFirstLetterLowerCase($dbColumnName[$j]) . "];<br>";
             }
-        }
-        $copyWithZone .= tab() . tab() . "((" . getTableNameFromPrimaryKey($primaryKey) .  " *)copy).replaceSelf = self.replaceSelf;<br>";
-        $copyWithZone .= tab() . tab() . "((" . getTableNameFromPrimaryKey($primaryKey) .  " *)copy).idInserted = self.idInserted;<br>";
+        }        
         $copyWithZone .= tab() . "}<br>";
         $copyWithZone .= tab() . "<br>";
         $copyWithZone .= tab() . "return copy;<br>";
@@ -464,7 +486,7 @@
     
     
     //model m
-    echo $import . $implement . $initMethod . $getNextID . $addObject . $removeObject . $addList . $removeList . $getObject . $copyWithZone . $editObject . $copyObjectFrom . "<br><br>";
+    echo $import . $implement . $dicMethod . $initMethod . $getNextID . $addObject . $removeObject . $addList . $removeList . $getObject . $copyWithZone . $editObject . $copyObjectFrom . "<br><br>";
 
     //shared model m
     echo $propertyShared . $method . "<br><br>";

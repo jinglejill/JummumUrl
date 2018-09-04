@@ -74,6 +74,23 @@
         
         
         
+        //****************send noti to shop (turn on light)
+        //alarmShop
+        //query statement
+        $ledStatus = 1;
+        $sql = "update $jummumOM.Branch set LedStatus = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where branchID = '$branchID';";
+        $ret = doQueryTask($sql);
+        if($ret != "")
+        {
+            mysqli_rollback($con);
+            //        putAlertToDevice();
+            echo json_encode($ret);
+            exit();
+        }
+        mysqli_commit($con);
+        //****************
+        
+        
 
         //get pushSync Device in JUMMUM OM
         $pushSyncDeviceTokenReceiveOrder = array();
@@ -89,40 +106,35 @@
 
         
         
+        
+        
+        if($type == "1")
+        {
+            $msg = "Order cancel request";
+        }
+        else if($type == "2")
+        {
+            $msg = "Open dispute request";
+        }
+        else
+        {
+            $msg = "Review negotiation";
+        }
+        
+        $category = "updateStatus";
+        $contentAvailable = 1;
+        $data = array("receiptID" => $receiptID);
+        sendPushNotificationJummumOM($pushSyncDeviceTokenReceiveOrder,$title,$msg,$category,$contentAvailable,$data);
+        
+        
+        
+        
+        
         /* execute multi query */
         $sql = "select * from receipt where receiptID = '$receiptID';";
         $sql .= "Select * from Dispute where receiptID = '$receiptID' and disputeID = '$disputeID';";
         $dataJson = executeMultiQueryArray($sql);
-        {
-            if($type == "1")
-            {
-                $msg = "Order cancel request";
-            }
-            else if($type == "2")
-            {
-                $msg = "Open dispute request";
-            }
-            else
-            {
-                $msg = "Review negotiation";
-            }
-
-            sendPushNotificationToDeviceWithPath($pushSyncDeviceTokenReceiveOrder,"./../$jummumOM/",'jill',$msg,$receiptID,'cancelOrder',1);
-            //****************send noti to shop (turn on light)
-            //alarmShop
-            //query statement
-            $ledStatus = 1;
-            $sql = "update $jummumOM.Branch set LedStatus = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where branchID = '$branchID';";
-            $ret = doQueryTask($sql);
-            if($ret != "")
-            {
-                mysqli_rollback($con);
-                //        putAlertToDevice();
-                echo json_encode($ret);
-                exit();
-            }
-            //****************
-        }
+        
     }
     else
     {        

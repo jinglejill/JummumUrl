@@ -79,10 +79,6 @@
         {
             $property .= "@property " . $propertyAttribute[$j] . " " . $dbColumnTypeName[$j] . " " . makeFirstLetterLowerCase($dbColumnName[$j]) . ";<br>";
         }
-        
-
-        $property .= "@property (nonatomic) NSInteger replaceSelf;<br>";
-        $property .= "@property (nonatomic) NSInteger idInserted;<br>";
         $property .= "<br>";
         
 

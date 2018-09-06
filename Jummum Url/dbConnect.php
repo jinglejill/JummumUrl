@@ -161,7 +161,7 @@
                 $paramAndValue = "Param=Value: ";
             }
             $paramAndValue .= "$param_name=$param_val&";
-            $_POST['$param_name'] = mysqli_real_escape_string($con,$param_val);
+            $_POST[$param_name] = mysqli_real_escape_string($con,$param_val);
             $i++;
         }
         

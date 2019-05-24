@@ -1,0 +1,354 @@
+2019-04-26T16:28:05+07:00 
+fail with exception: jtmnyt@gmail.com,47f203590e024bacca58176c681d8577c2ad1c1b7c127d6ed4ee171dcd073bf1\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x00000001005f638c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000100663edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:28:22+07:00 
+fail with exception: jtmnyt@gmail.com,47f203590e024bacca58176c681d8577c2ad1c1b7c127d6ed4ee171dcd073bf1\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x000000010246638c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x00000001024d3edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:29:01+07:00 
+fail with exception: jtmnyt@gmail.com,47f203590e024bacca58176c681d8577c2ad1c1b7c127d6ed4ee171dcd073bf1\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000104a7238c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000104adfedc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:29:25+07:00 
+fail with exception: jtmnyt@gmail.com,47f203590e024bacca58176c681d8577c2ad1c1b7c127d6ed4ee171dcd073bf1\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x000000010066638c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x00000001006d3edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:32:16+07:00 
+fail with exception: jtmnyt@gmail.com,ec34ebe8b9793dec21820a37f5832970a9a39aaab929989ea988ecb4a29d0666\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000100e9a38c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000100f07edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:33:01+07:00 
+fail with exception: jtmnyt@gmail.com,ec34ebe8b9793dec21820a37f5832970a9a39aaab929989ea988ecb4a29d0666\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000102cfa38c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000102d67edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:43:07+07:00 
+fail with exception: jtmnyt@gmail.com,ec34ebe8b9793dec21820a37f5832970a9a39aaab929989ea988ecb4a29d0666\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000100ad238c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000100b3fedc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:46:45+07:00 
+fail with exception: eris_eile@hotmail.com,0eecb6a6142041f7022e15988479658848d3ca51db33b07721ee8c4c8aa9c235\
+-[CustomTableViewCellTotal lblText]: unrecognized selector sent to instance 0x10298d400\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   UIKitCore                           0x0000000247defef8 <redacted>   280\
+4   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+5   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+6   Jummum2                             0x0000000100f8a694 Jummum2   681620\
+7   Jummum2                             0x0000000100f8a420 Jummum2   680992\
+8   Foundation                          0x000000021c4538e4 __NSFireTimer   84\
+9   CoreFoundation                      0x000000021b95e8f4 <redacted>   28\
+10  CoreFoundation                      0x000000021b95e624 <redacted>   864\
+11  CoreFoundation                      0x000000021b95de58 <redacted>   248\
+12  CoreFoundation                      0x000000021b958da8 <redacted>   1844\
+13  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+14  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+15  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+16  Jummum2                             0x0000000100f67edc Jummum2   540380\
+17  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:52:21+07:00 
+fail with exception: jtmnyt@gmail.com,0eecb6a6142041f7022e15988479658848d3ca51db33b07721ee8c4c8aa9c235\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000100d7238c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000100ddfedc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T16:55:55+07:00 
+fail with exception: jtmnyt@gmail.com,0eecb6a6142041f7022e15988479658848d3ca51db33b07721ee8c4c8aa9c235\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000104dda38c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000104e47edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T17:08:13+07:00 
+fail with exception: jtmnyt@gmail.com,0eecb6a6142041f7022e15988479658848d3ca51db33b07721ee8c4c8aa9c235\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000100f1a38c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000100f87edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T17:08:41+07:00 
+fail with exception: jtmnyt@gmail.com,0eecb6a6142041f7022e15988479658848d3ca51db33b07721ee8c4c8aa9c235\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000104dd638c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000104e43edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4
+2019-04-26T17:10:45+07:00 
+fail with exception: eris_eile@hotmail.com,8bb3425b4382a186b6091a3cc3dba32324d6a281d5d5f6c134fd0c0dcb7d631c\
+-[CustomTableViewCellTotal lblText]: unrecognized selector sent to instance 0x1029aea00\
+0   CoreFoundation                      0x00000001847d6da4 <redacted>   252\
+1   libobjc.A.dylib                     0x00000001839905ec objc_exception_throw   56\
+2   CoreFoundation                      0x00000001847e4098 <redacted>   0\
+3   UIKit                               0x000000018e8c9db0 <redacted>   292\
+4   CoreFoundation                      0x00000001847dc5c8 <redacted>   1380\
+5   CoreFoundation                      0x00000001846c241c _CF_forwarding_prep_0   92\
+6   Jummum2                             0x0000000100e92694 Jummum2   681620\
+7   Jummum2                             0x0000000100e92420 Jummum2   680992\
+8   Foundation                          0x00000001852233d4 __NSFireTimer   88\
+9   CoreFoundation                      0x000000018477faa8 <redacted>   28\
+10  CoreFoundation                      0x000000018477f76c <redacted>   864\
+11  CoreFoundation                      0x000000018477f010 <redacted>   248\
+12  CoreFoundation                      0x000000018477cb60 <redacted>   2168\
+13  CoreFoundation                      0x000000018469cda8 CFRunLoopRunSpecific   552\
+14  GraphicsServices                    0x0000000186682020 GSEventRunModal   100\
+15  UIKit                               0x000000018e6bc758 UIApplicationMain   236\
+16  Jummum2                             0x0000000100e6fedc Jummum2   540380\
+17  libdyld.dylib                       0x000000018412dfc0 <redacted>   4
+2019-04-26T17:39:44+07:00 
+fail with exception: jtmnyt@gmail.com,0eecb6a6142041f7022e15988479658848d3ca51db33b07721ee8c4c8aa9c235\
+-[NSNull longLongValue]: unrecognized selector sent to instance 0x24b301810\
+0   CoreFoundation                      0x000000021b9cc530 <redacted>   252\
+1   libobjc.A.dylib                     0x000000021aba79f8 objc_exception_throw   56\
+2   CoreFoundation                      0x000000021b8e9278 <redacted>   0\
+3   CoreFoundation                      0x000000021b9d1d60 <redacted>   1408\
+4   CoreFoundation                      0x000000021b9d39fc _CF_forwarding_prep_0   92\
+5   Foundation                          0x000000021c407c54 <redacted>   76\
+6   Foundation                          0x000000021c351a00 <redacted>   264\
+7   Jummum2                             0x0000000104b2638c Jummum2   91020\
+8   CFNetwork                           0x000000021c14f944 <redacted>   40\
+9   Foundation                          0x000000021c430f68 <redacted>   16\
+10  Foundation                          0x000000021c33d420 <redacted>   72\
+11  Foundation                          0x000000021c33c908 <redacted>   740\
+12  Foundation                          0x000000021c432cec <redacted>   272\
+13  libdispatch.dylib                   0x000000021b3bb7f0 <redacted>   104\
+14  libdispatch.dylib                   0x000000021b40d7d4 <redacted>   16\
+15  libdispatch.dylib                   0x000000021b3bb004 <redacted>   1068\
+16  CoreFoundation                      0x000000021b95dec0 <redacted>   12\
+17  CoreFoundation                      0x000000021b958df8 <redacted>   1924\
+18  CoreFoundation                      0x000000021b958354 CFRunLoopRunSpecific   436\
+19  GraphicsServices                    0x000000021db5879c GSEventRunModal   104\
+20  UIKitCore                           0x0000000247dc4b68 UIApplicationMain   212\
+21  Jummum2                             0x0000000104b93edc Jummum2   540380\
+22  libdyld.dylib                       0x000000021b41e8e0 <redacted>   4

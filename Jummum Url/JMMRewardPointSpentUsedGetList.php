@@ -6,11 +6,13 @@
     
     
     
-    if(isset($_POST["memberID"]))
+    if(isset($_POST["memberID"]) && isset($_POST["searchText"]) && isset($_POST["page"]) && isset($_POST["perPage"]))
     {
+        $searchText = $_POST["searchText"];
+        $page = $_POST["page"];
+        $perPage = $_POST["perPage"];
         $memberID = $_POST["memberID"];
     }
-    
     
     
     // Check connection
@@ -20,11 +22,14 @@
     }
     
     
-    $currentDateTime = date('Y-m-d H:i:s');
-    $sql = "SELECT rewardpoint.* FROM `rewardpoint` left join promoCode on rewardPoint.promoCodeID = promoCode.promoCodeID left join RewardRedemption on promocode.rewardRedemptionID = RewardRedemption.rewardRedemptionID WHERE MemberID = '$memberID' and rewardpoint.status = -1 and promoCode.status = 2 order by rewardPoint.modifiedDate desc, rewardPointID desc limit 10;";
-    $sql .= "SELECT promoCode.* FROM `rewardpoint` left join promoCode on rewardPoint.promoCodeID = promoCode.promoCodeID left join RewardRedemption on promocode.rewardRedemptionID = RewardRedemption.rewardRedemptionID WHERE MemberID = '$memberID' and rewardpoint.status = -1 and promoCode.status = 2 order by rewardPoint.modifiedDate desc, rewardPointID desc limit 10;";
-    $sql .= "SELECT RewardRedemption.* FROM `rewardpoint` left join promoCode on rewardPoint.promoCodeID = promoCode.promoCodeID left join RewardRedemption on promocode.rewardRedemptionID = RewardRedemption.rewardRedemptionID WHERE MemberID = '$memberID' and rewardpoint.status = -1 and promoCode.status = 2 order by rewardPoint.modifiedDate desc, rewardPointID desc limit 10";
+    $searchText = trim($searchText);
+    $strPattern = getRegExPattern($searchText);
     
+    
+    $currentDateTime = date('Y-m-d H:i:s');
+    $sql = "select * from (select (@row_number:=@row_number + 1) AS Num, a.* from (SELECT rewardpoint.*,promoCode.ModifiedDate RedeemDate,RewardRedemption.RewardRedemptionID,RewardRedemption.SubTitle FROM `rewardpoint` left join promoCode on rewardPoint.promoCodeID = promoCode.promoCodeID left join RewardRedemption on promocode.rewardRedemptionID = RewardRedemption.rewardRedemptionID WHERE MemberID = '$memberID' and rewardpoint.status = -1 and promoCode.status = 2) a, (SELECT @row_number:=0) AS t where SubTitle rlike '$strPattern' order by RedeemDate desc, RewardRedemptionID desc) b where Num > $perPage*($page-1) limit $perPage;";
+    $sql .= "select * from (select (@row_number:=@row_number + 1) AS Num, a.* from (SELECT promoCode.*,promoCode.ModifiedDate RedeemDate,RewardRedemption.SubTitle FROM `rewardpoint` left join promoCode on rewardPoint.promoCodeID = promoCode.promoCodeID left join RewardRedemption on promocode.rewardRedemptionID = RewardRedemption.rewardRedemptionID WHERE MemberID = '$memberID' and rewardpoint.status = -1 and promoCode.status = 2) a, (SELECT @row_number:=0) AS t where SubTitle rlike '$strPattern' order by RedeemDate desc, RewardRedemptionID desc) b where Num > $perPage*($page-1) limit $perPage;";
+    $sql .= "select * from (select (@row_number:=@row_number + 1) AS Num, a.* from (SELECT RewardRedemption.*,promoCode.ModifiedDate RedeemDate FROM `rewardpoint` left join promoCode on rewardPoint.promoCodeID = promoCode.promoCodeID left join RewardRedemption on promocode.rewardRedemptionID = RewardRedemption.rewardRedemptionID WHERE MemberID = '$memberID' and rewardpoint.status = -1 and promoCode.status = 2 order by promoCode.modifiedDate desc) a, (SELECT @row_number:=0) AS t where SubTitle rlike '$strPattern' order by RedeemDate desc, RewardRedemptionID desc) b where Num > $perPage*($page-1) limit $perPage;";
     
     
     

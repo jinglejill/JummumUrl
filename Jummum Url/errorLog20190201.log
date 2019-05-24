@@ -1,0 +1,27 @@
+2019-02-01T19:12:53+07:00 
+fail with exception: jinglejill@hotmail.com,e28b10335e25112139d8c9d0632531e245d8c3ec91c00978fe36fec019de1262\
+-[__NSCFDictionary setObject:forKey:]: mutating method sent to immutable object\
+0   CoreFoundation                      0x000000018209717c <redacted>   148\
+1   libobjc.A.dylib                     0x00000001812e0528 objc_exception_throw   56\
+2   CoreFoundation                      0x00000001820970ac <redacted>   0\
+3   CoreFoundation                      0x0000000181f6ef14 <redacted>   120\
+4   Jummum2                             0x00000001003d753c Jummum2   324924\
+5   UIKit                               0x000000018b6865cc <redacted>   96\
+6   UIKit                               0x000000018b68654c <redacted>   80\
+7   UIKit                               0x000000018b6710f4 <redacted>   440\
+8   UIKit                               0x000000018b685e40 <redacted>   576\
+9   UIKit                               0x000000018b685960 <redacted>   2544\
+10  UIKit                               0x000000018b680e78 <redacted>   3208\
+11  UIKit                               0x000000018b651e7c <redacted>   340\
+12  UIKit                               0x000000018bfa730c <redacted>   2364\
+13  UIKit                               0x000000018bfa9898 <redacted>   4760\
+14  UIKit                               0x000000018bfa27b0 <redacted>   152\
+15  CoreFoundation                      0x000000018203f77c <redacted>   24\
+16  CoreFoundation                      0x000000018203f6fc <redacted>   88\
+17  CoreFoundation                      0x000000018203ef84 <redacted>   204\
+18  CoreFoundation                      0x000000018203cb5c <redacted>   1048\
+19  CoreFoundation                      0x0000000181f5cc58 CFRunLoopRunSpecific   436\
+20  GraphicsServices                    0x0000000183e08f84 GSEventRunModal   100\
+21  UIKit                               0x000000018b6b55c4 UIApplicationMain   236\
+22  Jummum2                             0x000000010040bedc Jummum2   540380\
+23  libdyld.dylib                       0x0000000181a7c56c <redacted>   4

@@ -14,7 +14,7 @@
     }
     else
     {
-        $imageFileName = "201508131130161.jpg";
+        $imageFileName = "/201508131130161.jpg";
     }
     
     
@@ -35,38 +35,62 @@
     
     
     $b64image = "";
-    if($imageFileName != "")
+    switch($type)
     {
-        switch($type)
-        {
-            case 1://menu
-                $imageFileName = "./$dbName/Image/Menu/$imageFileName";
-                break;
-            case 2://logo
-                $imageFileName = "./$dbName/Image/Logo/$imageFileName";
-                break;
-            case 3://promotion
-                $imageFileName = "./Image/Promotion/$imageFileName";
-                break;
-            case 4://reward
-                $imageFileName = "./Image/Reward/$imageFileName";
-                break;
-        }
+        case 1://menu
+            $filenameIn = "./../$masterFolder/$dbName/Image/Menu/$imageFileName";
+            break;
+        case 2://logo
+            $filenameIn = "./../$masterFolder/$dbName/Image/Logo/$imageFileName";
+            break;
+        case 3://promotion
+            $filenameIn = "./../$masterFolder/Image/Promotion/$imageFileName";
+            break;
+        case 4://reward
+            $filenameIn = "./../$masterFolder/Image/Reward/$imageFileName";
+            break;
+        case 5://jummum material
+            $filenameIn = "./../$masterFolder/Image/$imageFileName";
+            break;
     }
-    else
-    {
-        $imageFileName = "./Image/NoImage.jpg";
-    }
-    $filenameIn  = $imageFileName;
     
+    writeToLog("fileNameIn: " . $filenameIn);
     
     
     // Check if file already exists
-    if (file_exists($filenameIn))
+    if ($imageFileName != "" && file_exists($filenameIn))
     {
         $b64image = base64_encode(file_get_contents($filenameIn));
     }
-
+    else
+    {
+        switch($type)
+        {
+            case 1:
+            case 2:
+            {
+                $filenameIn = "./../$masterFolder/$dbName/Image/NoImage.jpg";
+            }
+                break;
+            case 3:
+            case 4:
+            case 5:
+            {
+                $filenameIn = "./../$masterFolder/Image/NoImage.jpg";
+            }
+                break;
+        }
+        
+        $b64image = base64_encode(file_get_contents($filenameIn));
+    }
+    
+//    //test*****
+//    $file = "http://www.jummum.co/App/icon-512.png";
+//    $src = imagecreatefrompng($file);
+//    header("Content-Type: image/png");
+//    imagepng($src);
+//    //*****
+    
     
     
     echo json_encode(array('base64String' => $b64image, 'post_image_filename' => $imageFileName));

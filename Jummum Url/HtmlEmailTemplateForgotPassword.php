@@ -11,7 +11,7 @@
     <table width="100%">
     <tr>
     <td >
-        <img class="active" src="./Image/jummumLogo.png" alt="" width="150" />
+        <img class="active" src="#jummumFilePath#/Image/jummum_logo.png" alt="" width="150" />
     </td>
     </tr>
     </table>
@@ -34,7 +34,7 @@
         </tr>
         <tr>
             <td>
-                <a href="./resetpassword.php?codereset=#codereset#" rel="noopener noreferrer" target="_blank">Reset password</a>
+                <a href="#jummumFilePath#/resetpassword.php?codereset=#codereset#" rel="noopener noreferrer" target="_blank">Reset password</a>
             </td>
         </tr>
         <tr>

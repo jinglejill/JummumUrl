@@ -123,9 +123,15 @@
     
     
     //send noti to om
+    $sql = "select * from receipt where receiptID = '$receiptID'";
+    $selectedRow = getSelectedRow($sql);
+    $memberID = $selectedRow[0]["MemberID"];
+    $orderNo = $selectedRow[0]["ReceiptNoID"];
+    
+    
     if($type == 2)
     {
-        $msg = "Open dispute request";
+        $msg = "Order no.$orderNo Open dispute request";
         $category = "updateStatus";
         $contentAvailable = 1;
         $data = array("receiptID" => $receiptID);
@@ -137,16 +143,13 @@
     if($type == 5)
     {
         //send noti to customer from admin
-        $sql = "select * from receipt where receiptID = '$receiptID'";
-        $selectedRow = getSelectedRow($sql);
-        $memberID = $selectedRow[0]["MemberID"];
         $sql = "select login.DeviceToken from login left join useraccount on login.username = useraccount.username where useraccount.userAccountID = '$memberID' order by login.modifiedDate desc limit 1;";
         $selectedRow = getSelectedRow($sql);
         $customerDeviceToken = $selectedRow[0]["DeviceToken"];
         $arrCustomerDeviceToken = array();
         array_push($arrCustomerDeviceToken,$customerDeviceToken);
         
-        $msg = "Review dispute";
+        $msg = "Order no.$orderNo Review dispute";
         $category = "updateStatus";
         $contentAvailable = 1;
         $data = array("receiptID" => $receiptID);

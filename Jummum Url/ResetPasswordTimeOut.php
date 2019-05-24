@@ -16,7 +16,7 @@ body {
 </style>
 </head>
 <body text="#FFFFFF" style="background-color:#FF3C4B">
-<p>&nbsp;<img class="" src="./Image/jummumLogo.png" alt="" width="120" /></p>
+<p>&nbsp;<img class="" src="./Image/jummum_logo.png" alt="" width="120" /></p>
 <p>&nbsp;</p>
 ไม่สามารถรีเซ็ตรหัสผ่านได้ กรุณาส่งคำขอเปลี่ยนรหัสผ่านอีกครั้งหนึ่ง
 <p>&nbsp;</p>
@@ -24,6 +24,6 @@ body {
 <tbody>
 </tbody>
 </table>
-<p style="font-size:16px;">**หากคุณต้องการความช่วยเหลือสามารถติดต่อผ่านทางอีเมลล์&nbsp;<a href="mailto:hello@jummum.co">hello@jummum.co</a>&nbsp;หรือโทร 081-307-2993</p>
+<p style="font-size:16px;">**หากคุณต้องการความช่วยเหลือสามารถติดต่อผ่านทางอีเมล&nbsp;<a href="mailto:hello@jummum.co">hello@jummum.co</a>&nbsp;หรือโทร 081-307-2993</p>
 </body>
 </html>

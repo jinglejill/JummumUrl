@@ -1,6 +1,9 @@
 <?php
-    $masterFolder = "MasterProduction";
+//    header('Content-Type: application/json');
+    $salt = @"FvTivqTqZXsgLLx1v3P8TGRyVHaSOB1pvfm02wvGadj7RLHV8GrfxaZ84oGA8RsKdNRpxdAojXYg9iAj";
+    $masterFolder = "MasterPrd";
     include_once("./../$masterFolder/JMMNeedUpdateVersion.php");
+    
     
     //conection variable
     $con;
@@ -14,22 +17,118 @@
     $adminCkPath = "./../AdminApp/";
     $adminCkPass = "jill";
     $bundleID = "com.JummumCo.Jummum";
-    $firebaseKeyJummum = "AAAAz3AS81k:APA91bFKi3sIJEGKHaugE1gSB0i0MHio4W4EnOrrvOWzL9lPufo7ZKrinuhnQlUyGGLwx0925AGW5FvJ5xI2cKiuwU2rSsDGMQzT7-DEKviu2Y3OgHcFqpagJSu9j2qAAJVOAu9hSZf6sxOmcMJEcJrQVJGKGlJhPQ";
+    $sandBox = 0;
+    $firebaseKeyJummum = "AAAA5h2UtWI:APA91bG5-_F1ISKk1dAbAOiZxtoG75nbYc-0N-NmYsXaDaL7Pv8yOeP21wnWm7kRO8P6JvwNIRTiJCn45KdbeGoW6qZEHM4NPHrKgFJdymKgEE2ctDhTFc0jDZ4cOKnjqAW1rSgVeF03l9st8U4efhoviuhETQd1pA";
     $firebaseKeyJummumOM = "AAAAs8VRTGE:APA91bHeKIqzV7q7aQgoSqefRR7kyGwW7OCcpwsX5o_pu4eMbCTidNe3SU-8YB_2u-W1kD2yLlA4RTXGe4_HGXnFPri9OrFT-fCIjpXtIraxLMaMsQiGmJtVnSzRKaI9Tbh5UZSkjoqYFrymtdZGQYyxz-NNr4f4dQ";
     $firebaseKeyAdmin = "AAAAulrZL7w:APA91bFoAJOcDaZSmiPnT2X2MyC18b95x0j09CiuRqbeo4o0MXvzWWmdsVwKfL6ZyLaEHZ1drMHNG1OZBoWOKWtpDDHKzH0UU3lLy-kly52riEtZ1Az_HZIqCOnrnHGTICXi49Whi8_5EB99X6z81QiBT3j0YmnAIA";
     
+    function getWeekDayText($weekDay)
+    {
+        switch($weekDay)
+        {
+            case 1: return "จันทร์";
+            case 2: return "อังคาร";
+            case 3: return "พุธ";
+            case 4: return "พฤหัส";
+            case 5: return "ศุกร์";
+            case 6: return "เสาร์";
+            case 7: return "อาทิตย์";
+        }
+    }
     
-    function isNeedUpdateVersion()
+    function getRegExPattern($searchText)
+    {
+        $strPattern = "";
+        $arrSearchText = explode(" ", $searchText);
+        for($i=0; $i<sizeof($arrSearchText); $i++)
+        {
+            if($i != 0)
+            {
+                $strPattern .= "|";
+            }
+            $strPattern .= "($arrSearchText[$i])";
+        }
+        return $strPattern;
+    }
+    
+    function luhnAlgorithm($number)
+    {
+        $stack = 0;
+        $number = str_split(strrev($number));
+
+        foreach ($number as $key => $value)
+        {
+            if ($key % 2 == 0)
+            {
+                $value = array_sum(str_split($value * 2));
+            }
+            $stack += $value;
+        }
+        $stack %= 10;
+
+        if ($stack != 0)
+        {
+            $stack -= 10;     $stack = abs($stack);
+        }
+
+
+        $number = implode('', array_reverse($number));
+        $number = $number . strval($stack);
+        return $number;
+    }
+    
+    function cors()
+    {
+        writeToLog("cors");
+        header('Content-Type: application/json');
+        // Allow from any origin
+        if (isset($_SERVER['HTTP_ORIGIN']))
+        {
+            writeToLog("HTTP_ORIGIN:" . isset($_SERVER['HTTP_ORIGIN']));
+            writeToLog("HTTP_ORIGIN:" . $_SERVER['HTTP_ORIGIN']);
+            // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
+            // you want to allow, and if so:
+            header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+            header('Access-Control-Allow-Credentials: true');
+            header('Access-Control-Max-Age: 86400');    // cache for 1 day
+        }
+
+        // Access-Control headers are received during OPTIONS requests
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+        {
+            writeToLog("REQUEST_METHOD:" . isset($_SERVER['REQUEST_METHOD']));
+            writeToLog("REQUEST_METHOD:" . $_SERVER['REQUEST_METHOD']);
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            {
+                writeToLog("HTTP_ACCESS_CONTROL_REQUEST_METHOD:" . isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']));
+                writeToLog("HTTP_ACCESS_CONTROL_REQUEST_METHOD:" . $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']);
+                // may also be using PUT, PATCH, HEAD etc
+                header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+            }
+            
+
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            {
+                writeToLog("HTTP_ACCESS_CONTROL_REQUEST_HEADERS:" . isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']));
+                writeToLog("HTTP_ACCESS_CONTROL_REQUEST_HEADERS:" . $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']);
+                header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+            }
+            
+
+            exit(0);
+        }
+
+//    echo "You have CORS!";
+    }
+    
+    function getAppStoreVersion()
     {
         global $bundleID;
-        global $needUpdateVersion;
-        
         
         // create curl resource
         $ch = curl_init();
         
         // set url
-//                curl_setopt($ch, CURLOPT_URL, "http://www.jummum.co/DEV/DEV_JUMMUM/test.php");
         curl_setopt($ch, CURLOPT_URL, "http://itunes.apple.com/lookup?bundleId=$bundleID");
         
         //return the transfer as a string
@@ -46,13 +145,46 @@
         if($result["resultCount"]==1)
         {
             $appStoreVersion = $result[@"results"][0][@"version"];
-            if($appStoreVersion == $needUpdateVersion)
-            {
-                writeToLog("new appStore version coming, user: " . $_POST['modifiedUser']);
-                $response = array('status' => '3');
-                echo json_encode($response);
-                exit();
-            }
+            return $appStoreVersion;
+        }
+        
+        return 0;
+    }
+    
+    function isNeedUpdateVersion()
+    {
+        global $bundleID;
+        global $needUpdateVersion;
+        
+        
+        // create curl resource
+        $ch = curl_init();
+        
+        // set url
+//curl_setopt($ch, CURLOPT_URL, "http://www.jummum.co/MasterDemo/JUMMUM/JMMLatestVersion.php");
+        curl_setopt($ch, CURLOPT_URL, "http://itunes.apple.com/lookup?bundleId=$bundleID");
+        
+        //return the transfer as a string
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        
+        // $output contains the output string
+        $output = curl_exec($ch);
+        
+        // close curl resource to free up system resources
+        curl_close($ch);
+        
+        $result = json_decode($output,true);
+
+        if($result["resultCount"]==1)
+        {
+            $appStoreVersion = $result[@"results"][0][@"version"];
+//            if($appStoreVersion == $needUpdateVersion)
+//            {
+//                writeToLog("new appStore version coming, user: " . $_POST['modifiedUser']);
+//                $response = array('status' => '3');
+//                echo json_encode($response);
+//                exit();
+//            }
         }
     }
     
@@ -91,6 +223,23 @@
         
         return $strings;
         
+    }
+    
+    function executeQueryArray($sql)
+    {
+        writeToLog("QueryArray: " . $sql);
+        global $con;
+        if ($result = mysqli_query($con, $sql)) {
+            $resultArray = array();
+
+            while ($row = mysqli_fetch_object($result)) {
+                array_push($resultArray, $row);
+            }
+            mysqli_free_result($result);
+            
+            return $resultArray;
+        }
+        return null;
     }
     
     function executeMultiQueryArray($sql)
@@ -169,6 +318,8 @@
         {
             writeToLog($paramAndValue);
         }
+        
+        $_POST["modifiedDate"] = date("Y-m-d H:i:s");
     }
     
     function getToPost()
@@ -230,6 +381,11 @@
         
         // Create connection
 //        $con=mysqli_connect("localhost","FFD","123456",$dbName);
+
+//        //test
+//        $con=mysqli_connect("localhost","MINIMALIST","123456","MINIMALIST");
+        
+        
         $con=mysqli_connect("localhost","andAdmin","111111",$dbName);
         
         
@@ -237,10 +393,10 @@
         mysqli_set_charset($con, "utf8");
         
         
-        if($checkUpdate)
-        {
-            isNeedUpdateVersion();
-        }
+//        if($checkUpdate)
+//        {
+//            isNeedUpdateVersion();
+//        }
     }
     
     function getDeviceTokenFromUsername($user)
@@ -264,7 +420,7 @@
         {
             $error = "query fail: " .  mysqli_error($con). ", sql: $sql, modified user: $user";
             writeToLog($error);
-            $response = array('status' => $error);
+            $response = array('status' => $error, 'success' => false, 'data' => null, error => 'Some problem occur, please try again');
             return $response;
         }
         else
@@ -283,7 +439,7 @@
         {
             $error = "query fail: " .  mysqli_error($con). ", sql: $sql, modified user: $user";
             writeToLog($error);
-            $response = array('status' => $error);
+            $response = array('status' => $error, 'success' => false, 'data' => null, error => 'Some problem occur, please try again');
             return $response;
         }
         else
@@ -291,111 +447,6 @@
             writeToLog("query success, sql: $sql, modified user: $user");
         }
         return "";
-    }
-
-    function doPushNotificationTaskToDevice($deviceToken,$selectedRow,$type,$action)
-    {
-        global $con;
-        $sql = "insert into pushSync (DeviceToken, TableName, Action, Data, TimeSync) values ('$deviceToken','$type','$action','" . json_encode($selectedRow, JSON_UNESCAPED_UNICODE) . "',now())";
-        $ret = doQueryTask($sql);
-        if($ret != "")
-        {
-            mysqli_rollback($con);            
-            return $ret;
-        }
-        $pushSyncID = mysqli_insert_id($con);
-        writeToLog('pushsyncid: '.$pushSyncID);
-        
-        return "";
-    }
-    
-    function doPushNotificationTask($deviceToken,$selectedRow,$type,$action)
-    {
-        global $con;
-        $pushDeviceTokenList = getOtherDeviceTokensList($deviceToken);
-        
-        foreach ($pushDeviceTokenList as $iDeviceToken)
-        {
-            //query statement
-            if(strcmp($type,"sProductSales") == 0)
-            {
-                $sql = "insert into pushSync (DeviceToken, TableName, Action, Data, TimeSync) values ('$iDeviceToken','$type','$action','" . $selectedRow . "',now())";
-            }
-            else if(strcmp($type,"sCompareInventory") == 0)
-            {
-                $sql = "insert into pushSync (DeviceToken, TableName, Action, Data, TimeSync) values ('$iDeviceToken','$type','$action','" . $selectedRow . "',now())";
-            }
-            else
-            {
-                $sql = "insert into pushSync (DeviceToken, TableName, Action, Data, TimeSync) values ('$iDeviceToken','$type','$action','" . json_encode($selectedRow, JSON_UNESCAPED_UNICODE) . "',now())";
-            }
-            $ret = doQueryTask($sql);
-            if($ret != "")
-            {
-                mysqli_rollback($con);
-                return $ret;
-            }
-            $pushSyncID = mysqli_insert_id($con);
-            writeToLog('pushsyncid: '.$pushSyncID);
-        }
-        return "";
-    }
-    
-    function doPushNotificationTaskWithDbName($deviceToken,$selectedRow,$type,$action,$dbName)
-    {
-        global $con;
-//        $pushDeviceTokenList = getOtherDeviceTokensList($deviceToken);
-        
-//        foreach ($pushDeviceTokenList as $iDeviceToken)
-        {
-            //query statement
-            {
-                $sql = "insert into $dbName.pushSync (DeviceToken, TableName, Action, Data, TimeSync) values ('$deviceToken','$type','$action','" . json_encode($selectedRow, JSON_UNESCAPED_UNICODE) . "',now())";
-            }
-            $ret = doQueryTask($sql);
-            if($ret != "")
-            {
-                mysqli_rollback($con);
-                return $ret;
-            }
-            $pushSyncID = mysqli_insert_id($con);
-            writeToLog('pushsyncid: '.$pushSyncID);
-        }
-        return "";
-    }
-    
-    function doPushNotificationTaskAsLog($con,$user,$deviceToken,$selectedRow,$type,$action)
-    {
-        //query statement
-        $sql = "insert into pushSync (DeviceToken, TableName, Action, Data, TimeSync,TimeSynced) values ('$deviceToken','$type','delete log','" . json_encode($selectedRow, true) . "',now(),now())";
-        $ret = doQueryTask($sql);
-        if($ret != "")
-        {
-            mysqli_rollback($con);
-            return $ret;
-        }
-        $pushSyncID = mysqli_insert_id($con);
-        writeToLog('delete log pushsyncid: '.$pushSyncID);
-        return "";
-    }
-    
-    function sendPushNotificationToAllDevices()
-    {
-        $pushDeviceTokenList = getAllDeviceTokenList();
-        
-        foreach ($pushDeviceTokenList as $iDeviceToken)
-        {
-            sendPushNotificationToDevice($iDeviceToken);
-        }
-    }
-    
-    function sendPushNotificationToOtherDevices($deviceToken)
-    {
-        $pushDeviceTokenList = getOtherDeviceTokensList($deviceToken);
-        foreach ($pushDeviceTokenList as $iDeviceToken)
-        {
-            sendPushNotificationToDevice($iDeviceToken);
-        }
     }
     
     function sendPushNotificationToDevice($deviceToken)
@@ -409,6 +460,7 @@
     function sendPushNotificationAdmin($deviceToken,$title,$text,$category,$contentAvailable,$data)
     {
         writeToLog("send push to admin $jummum");
+        global $firebaseKeyAdmin;
         global $adminCkPath;
         global $adminCkPass;
         foreach($deviceToken as $eachDeviceToken)
@@ -429,40 +481,26 @@
                     $paramBody["sound"] = "default";
                 }
                 
-                
-                //----in the period of user use old version, we need to send receiptID key
-                if($data)
-                {
-                    $receiptID = $data["receiptID"];
-                    if(!$receiptID)
-                    {
-                        $receiptID = $data["settingID"];
-                    }
-                }
-                if($receiptID)
-                {
-                    $paramBody["receiptID"] = $receiptID;
-                }
-                //----------------
-            
-                
                 sendPushNotificationWithPath($eachDeviceToken, $paramBody, $adminCkPath, $adminCkPass);
             }
             else
             {
                 $key = $firebaseKeyAdmin;
-                sendFirebasePushNotification($eachDeviceToken,"",$msg,$data,$key);
+                sendFirebasePushNotification($eachDeviceToken,$text,"",$data,$key);
             }
         }
     }
     
     function sendPushNotificationJummum($deviceToken,$title,$text,$category,$contentAvailable,$data)
     {
-        writeToLog("send push to $jummum");
+        global $firebaseKeyJummum;
         global $jummumCkPath;
         global $jummumCkPass;
+        writeToLog("send push to ck path: $jummumCkPath");
+        
         foreach($deviceToken as $eachDeviceToken)
         {
+            writeToLog("each device token: " . $eachDeviceToken);
             if(strlen($eachDeviceToken) == 64)
             {
                 $paramBody = array(
@@ -479,38 +517,24 @@
                     $paramBody["sound"] = "default";
                 }
                 
-                
-                //----in the period of user use old version, we need to send receiptID key
-                if($data)
-                {
-                    $receiptID = $data["receiptID"];
-                    if(!$receiptID)
-                    {
-                        $receiptID = $data["settingID"];
-                    }
-                }
-                if($receiptID)
-                {
-                    $paramBody["receiptID"] = $receiptID;
-                }
-                //----------------
-                
-                
                 sendPushNotificationWithPath($eachDeviceToken, $paramBody, $jummumCkPath, $jummumCkPass);
             }
             else
             {
                 $key = $firebaseKeyJummum;
-                sendFirebasePushNotification($eachDeviceToken,"",$msg,$data,$key);
+                sendFirebasePushNotification($eachDeviceToken,$text,"",$data,$key);
+                writeToLog("key: " . $key);
+                writeToLog("device token: " . $eachDeviceToken);
             }
         }
     }
     
     function sendPushNotificationJummumOM($deviceToken,$title,$text,$category,$contentAvailable,$data)
     {
-        writeToLog("send push to $jummumOM");
+        global $firebaseKeyJummumOM;
         global $jummumOMCkPath;
         global $jummumOMCkPass;
+        writeToLog("send push to ck path: $jummumOMCkPath");
         foreach($deviceToken as $eachDeviceToken)
         {
             if(strlen($eachDeviceToken) == 64)
@@ -538,43 +562,14 @@
             else
             {
                 $key = $firebaseKeyJummumOM;
-                sendFirebasePushNotification($eachDeviceToken,"",$msg,$data,$key);
-            }
-        }
-    }
-    
-    function sendPushNotificationToDeviceWithPath($deviceToken,$path,$passForCk,$msg,$receiptID,$category,$contentAvailable)
-    {
-        foreach($deviceToken as $eachDeviceToken)
-        {
-            if(strlen($eachDeviceToken) == 64)
-            {
-                $paramBody = array(
-                                   'content-available' => $contentAvailable
-                                   ,'receiptID' => $receiptID
-                                   );
-                if($category != '')
-                {
-                    $paramBody["category"] = $category;
-                }
-                if($msg != '')
-                {
-                    $paramBody["alert"] = $msg;
-                    $paramBody["sound"] = "default";
-                }
-                
-                sendPushNotificationWithPath($eachDeviceToken, $paramBody, $path, $passForCk);
-            }
-            else
-            {
-                $data = array("receiptID" => $receiptID);
-                sendFirebasePushNotification($eachDeviceToken,"",$msg,$data,$key);
+                sendFirebasePushNotification($eachDeviceToken,$text,"",$data,$key);
             }
         }
     }
     
     function sendFirebasePushNotification($token, $title, $text, $data, $key)
     {
+        writeToLog("send firebase push");
         // create curl resource
         $ch = curl_init();
         
@@ -592,7 +587,7 @@
                            ,"data" => $data
                            );
         $payload = json_encode($paramBody);
-        
+        writeToLog($payload);
         
         
         //header
@@ -741,6 +736,42 @@
         }
     }
     
+    function writeToGbpLog($message)
+    {
+        $year = date("Y");
+        $month = date("m");
+        $day = date("d");
+        
+        $fileName = 'gbpTransactionLog' . $year . $month . $day . '.log';
+        $filePath = './GbpTransactionLog/';
+        if (!file_exists($filePath))
+        {
+            mkdir($filePath, 0777, true);
+        }
+        $filePath = $filePath . $fileName;
+        
+        
+        
+        if ($fp = fopen($filePath, 'at'))
+        {
+            $arrMessage = explode("\\n",$message);
+            if(sizeof($arrMessage) > 1)
+            {
+                foreach($arrMessage as $eachLine)
+                {
+                    $newMessge .= PHP_EOL . $eachLine ;
+                }
+            }
+            else
+            {
+                $newMessge = $message;
+            }
+            
+            fwrite($fp, date('c') . ' ' . $newMessge . PHP_EOL);
+            fclose($fp);
+        }
+    }
+    
     function writeToErrorLog($message)
     {
         $year = date("Y");
@@ -793,12 +824,19 @@
 
         if(!$pushFail)
         {
-//            $fp = stream_socket_client(
-//                                       'ssl://gateway.sandbox.push.apple.com:2195', $err,
-//                                       $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-            $fp = stream_socket_client(
-                                       'ssl://gateway.push.apple.com:2195', $err,
+            global $sandBox;
+            if($sandBox)
+            {
+                $fp = stream_socket_client(
+                                       'ssl://gateway.sandbox.push.apple.com:2195', $err,
                                        $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            }
+            else
+            {
+                $fp = stream_socket_client(
+                                           'ssl://gateway.push.apple.com:2195', $err,
+                                           $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            }
         }
         
         
@@ -833,7 +871,6 @@
     
     function sendPushNotificationWithPath($strDeviceToken,$arrBody,$path,$passForCk)
     {
-        writeToLog("ck path: " . $path);
         writeToLog("send push to device: " . $strDeviceToken . ", body: " . json_encode($arrBody));
         global $pushFail;
         $token = $strDeviceToken;
@@ -842,18 +879,25 @@
         
 
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', $path.'ck.pem');
+        stream_context_set_option($ctx, 'ssl', 'local_cert', "$path".'ck.pem');
         stream_context_set_option($ctx, 'ssl', 'passphrase', $pass);
         
         
         if(!$pushFail)
         {
-//            $fp = stream_socket_client(
-//                                       'ssl://gateway.sandbox.push.apple.com:2195', $err,
-//                                       $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-            $fp = stream_socket_client(
-                                       'ssl://gateway.push.apple.com:2195', $err,
+            global $sandBox;
+            if($sandBox)
+            {
+                $fp = stream_socket_client(
+                                       'ssl://gateway.sandbox.push.apple.com:2195', $err,
                                        $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            }
+            else
+            {
+                $fp = stream_socket_client(
+                                           'ssl://gateway.push.apple.com:2195', $err,
+                                           $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            }
         }
         
         
@@ -900,12 +944,19 @@
         
         if(!$pushFail)
         {
-//            $fp = stream_socket_client(
-//                                       'ssl://gateway.sandbox.push.apple.com:2195', $err,
-//                                       $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-            $fp = stream_socket_client(
-                                       'ssl://gateway.push.apple.com:2195', $err,
+            global $sandBox;
+            if($sandBox)
+            {
+                $fp = stream_socket_client(
+                                       'ssl://gateway.sandbox.push.apple.com:2195', $err,
                                        $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            }
+            else
+            {
+                $fp = stream_socket_client(
+                                           'ssl://gateway.push.apple.com:2195', $err,
+                                           $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            }
         }
         
         
@@ -1018,5 +1069,10 @@
             case 7:
                 return "Sun\t";
         }
+    }
+    
+    function makeFirstLetterUpperCase($text)
+    {
+        return strtoupper(substr($text,0,1)) . substr($text,1,strlen($text)-1);
     }
 ?>

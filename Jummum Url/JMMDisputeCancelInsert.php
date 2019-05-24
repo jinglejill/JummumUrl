@@ -42,6 +42,7 @@
     $sql = "select * from receipt where receiptID = '$receiptID';";
     $selectedRow = getSelectedRow($sql);
     $receiptStatus = $selectedRow[0]["Status"];
+    $orderNo = $selectedRow[0]["ReceiptNoID"];
     if($receiptStatus == 2)
     {
         //dispute
@@ -121,6 +122,7 @@
             $msg = "Review negotiation";
         }
         
+        $msg = "Order no.$orderNo $msg";
         $category = "updateStatus";
         $contentAvailable = 1;
         $data = array("receiptID" => $receiptID);

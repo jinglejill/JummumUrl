@@ -45,12 +45,31 @@
     $selectedRow = getSelectedRow($sql);
     if(sizeof($selectedRow) == 0)
     {
-        /* execute multi query */
-        $sql = "select * from promoCode where 0";
-        $dataJson = executeMultiQueryArray($sql);
+        $warningMsg = "จำนวนสิทธิ์ครบแล้ว";
+        writeToLog("validate fail: $warningMsg, file: " . basename(__FILE__) . ", user: " . $_POST['modifiedUser']);
+        $response = array('status' => '2', 'msg' => $warningMsg);
+        echo json_encode($response);
+        exit();
     }
     else
     {
+        $sql = "select * from rewardRedemption where rewardRedemptionID = '$rewardRedemptionID'";
+        $selectedRow = getSelectedRow($sql);
+        $point = $selectedRow[0]["Point"];
+        
+        $sql = "SELECT ifnull(floor(sum(Status * Point)),0) Point FROM `rewardpoint` WHERE MemberID = '$memberID';";
+        $selectedRow = getSelectedRow($sql);
+        $remainingPoint = $selectedRow[0]["Point"];
+        if($remainingPoint < $point)
+        {
+            $warningMsg = "แต้มไม่เพียงพอ";
+            writeToLog("validate fail: $warningMsg, file: " . basename(__FILE__) . ", user: " . $_POST['modifiedUser']);
+            $response = array('status' => '2', 'msg' => $warningMsg);
+            echo json_encode($response);
+            exit();
+        }
+        
+        
         //query statement
         $sql = "INSERT INTO RewardPoint(MemberID, ReceiptID, Point, Status, PromoCodeID, ModifiedUser, ModifiedDate) VALUES ('$memberID', '$receiptID', '$point', '$status', '$promoCodeID', '$modifiedUser', '$modifiedDate')";
         $ret = doQueryTask($sql);

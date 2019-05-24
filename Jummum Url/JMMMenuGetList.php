@@ -31,6 +31,7 @@
     $customerOrderStatus = $selectedRow[0]["Value"];
     
     
+    $currentDateTime = date("Y-m-d H:i:s");
     $inOpeningTime = 0;
     if($customerOrderStatus == 1)
     {
@@ -44,7 +45,6 @@
     {
         //get today's opening time**********
         $strDate = date("Y-m-d");
-        $currentDate = date("Y-m-d H:i:s");
         $dayOfWeek = date('w', strtotime($strDate));
         $sql = "select * from $dbName.OpeningTime where day = '$dayOfWeek' order by day,shiftNo";
         $selectedRow = getSelectedRow($sql);
@@ -63,7 +63,7 @@
             {
                 $startDate = date($strDate . " " . $startTime . ":00");
                 $endDate = date($strDate . " " . $endTime . ":00");
-                if($startDate<=$currentDate && $currentDate<=$endDate)
+                if($startDate<=$currentDateTime && $currentDateTime<=$endDate)
                 {
                     $inOpeningTime = 1;
                 }
@@ -73,7 +73,7 @@
                 $nextDate = date("Y-m-d", strtotime($strDate. ' + 1 days'));
                 $startDate = date($strDate . " " . $startTime . ":00");
                 $endDate = date($nextDate . " " . $endTime . ":00");
-                if($startDate<=$currentDate && $currentDate<=$endDate)
+                if($startDate<=$currentDateTime && $currentDateTime<=$endDate)
                 {
                     $inOpeningTime = 1;
                 }
@@ -108,15 +108,14 @@
     {
         $sql = "select 0 as Text;";
     }
-    $sql .= "select '$branchID' BranchID, $dbName.menu.* from $dbName.menu where Status = 1 and belongToMenuID = 0;";
-    $sql .= "select '$branchID' BranchID, $dbName.menuType.* from $dbName.menu left join $dbName.menuType on $dbName.menu.menuTypeID = $dbName.menuType.menuTypeID where $dbName.menu.Status = 1 and $dbName.menuType.Status = 1 and belongToMenuID = 0;";
-    $sql .= "select '$branchID' BranchID, $dbName.note.* from $dbName.note where Status = 1;";
-    $sql .= "select '$branchID' BranchID, '$branchID' BranchID, $dbName.notetype.* from $dbName.notetype where Status = 1;";
-    $sql .= "select '$branchID' BranchID, $dbName.specialPriceProgram.* from $dbName.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');";
-    writeToLog("sql = " . $sql);
+    $sql .= "select * from ((select '$branchID' BranchID, 0 MenuTypeOrderNo, `MenuID`, `MenuCode`, `TitleThai`, `Price`,0 `MenuTypeID`, `SubMenuTypeID`, `BuffetMenu`, `AlacarteMenu`, `TimeToOrder`, `Recommended`, `RecommendedOrderNo`, `ImageUrl`, `Color`,recommendedOrderNo `OrderNo`, `Status`, `Remark`, `ModifiedUser`, `ModifiedDate` from $dbName.menu where Status = 1 and alacarteMenu = 1 and recommended = 1 order by recommendedOrderNo) union (select '$branchID' BranchID, MenuType.OrderNo as MenuTypeOrderNo, `MenuID`, `MenuCode`, `TitleThai`, `Price`, menu.`MenuTypeID`, `SubMenuTypeID`, `BuffetMenu`, `AlacarteMenu`, `TimeToOrder`, `Recommended`, `RecommendedOrderNo`, `ImageUrl`, menu.`Color`, menu.`OrderNo`, menu.`Status`, `Remark`, menu.`ModifiedUser`, menu.`ModifiedDate` from $dbName.menu left join $dbName.menuType on menu.MenuTypeID = menuType.MenuTypeID where menu.Status = 1 and alacarteMenu = 1 order by MenuType.OrderNo, Menu.OrderNo) union (select '$branchID' BranchID,MenuType.OrderNo+100 as MenuTypeOrderNo, `MenuID`, `MenuCode`, `TitleThai`, `Price`,100 `MenuTypeID`, `SubMenuTypeID`, `BuffetMenu`, `AlacarteMenu`, `TimeToOrder`, `Recommended`, `RecommendedOrderNo`, `ImageUrl`, menu.`Color`, menu.`OrderNo` MenuOrderNo, menu.`Status`, `Remark`, menu.`ModifiedUser`, menu.`ModifiedDate` from $dbName.menu left join $dbName.menuType on menu.MenuTypeID = menuType.MenuTypeID where menu.Status = 1 and alacarteMenu = 1 order by menuType.OrderNo, MenuOrderNo))a order by MenuTypeOrderNo, OrderNo;";
+//    echo "<br>sql:".$sql;
+    $sql .= "select '$branchID' BranchID, 0 `MenuTypeID`, 'แนะนำ' `Name`,'Recommended' `NameEn`, 0 `AllowDiscount`, 0 OrderNo union (select distinct '$branchID' BranchID, menuType.`MenuTypeID`, `Name`, `NameEn`, `AllowDiscount`, menuType.`OrderNo` from $dbName.menu left join $dbName.menuType on menu.menuTypeID = menuType.menuTypeID where menu.Status = 1 and menuType.Status = 1 and alacarteMenu = 1 order by menuType.orderNo) union select '$branchID' BranchID, 100 `MenuTypeID`, 'ทั้งหมด' `Name`,'All' `NameEn`, 0 `AllowDiscount`, 100 OrderNo;";
+    $sql .= "select '$branchID' BranchID, specialPriceProgram.* from $dbName.specialPriceProgram left join $dbName.specialPriceProgramDay on specialPriceProgram.specialPriceProgramID = specialPriceProgramDay.specialPriceProgramID where '$currentDateTime' between startDate and endDate and specialPriceProgramDay.Day = weekday('$currentDateTime')+1;";
+    $sql .= "select * from $dbName.setting where keyName = 'luckyDrawSpend'";
     
     
-    
+
     /* execute multi query */
     $jsonEncode = executeMultiQueryArray($sql);
     $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);

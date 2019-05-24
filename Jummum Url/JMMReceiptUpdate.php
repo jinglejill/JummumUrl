@@ -105,6 +105,10 @@
     }
     
     
+    
+    $sql = "select * from receipt where receiptID = '$receiptID'";
+    $selectedRow = getSelectedRow($sql);
+    $orderNo = $selectedRow[0]["ReceiptNoID"];
     if($status == 11)
     {
         //get pushSync Device in jummum
@@ -117,7 +121,7 @@
             array_push($arrPushSyncDeviceTokenAdmin,$pushSyncDeviceTokenAdmin);
         }
         
-        $msg = "negotiation arrive!";
+        $msg = "Order no.$orderNo negotiation arrive!";
         $category = "admin";
         $contentAvailable = 1;
         $data = array("receiptID" => $receiptID);
@@ -137,7 +141,7 @@
     
     if($status == 13)
     {
-        $msg = "Review negotiate";
+        $msg = "Order no.$orderNo Review negotiate";
         $category = "updateStatus";
         $contentAvailable = 1;
         $data = array("receiptID" => $receiptID);

@@ -38,8 +38,9 @@
     }
     
 
-    $sql = "select '$branchID' BranchID, $dbName.menuNote.* from $dbName.menuNote where menuID = '$menuID';";
-    
+    $sql = "select '$branchID' BranchID, $dbName.menuNote.* from $dbName.menuNote where menuID = '$menuID' and status = 1;";
+    $sql .= "select '$branchID' BranchID, note.* from $dbName.menuNote left join $dbName.note on menuNote.noteID = note.noteID where menuID = '$menuID' and menuNote.status = 1 and note.status = 1;";
+    $sql .= "select distinct '$branchID' BranchID, notetype.*, note.Type from $dbName.menuNote left join $dbName.note on menuNote.noteID = note.noteID left join $dbName.NoteType on Note.NoteTypeID = NoteType.NoteTypeID where menuID = '$menuID' and menuNote.status = 1 and note.status = 1 and noteType.Status = 1;";
     
     
     

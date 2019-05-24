@@ -1,5 +1,7 @@
 <?php
     include_once("dbConnect.php");
+    $fullPath = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $posLastSlash = strripos($fullPath,'/');
 ?>
 <html>
 <head>
@@ -51,7 +53,7 @@ function validateForm()
 </script>
 </head>
 <body text="#FFFFFF" style="background-color:#FF3C4B">
-<p>&nbsp;<img class="" src="http://www.jummum.co/<?=$jummumPath?>Image/jummumLogo.png" alt="" width="120" /></p>
+<p>&nbsp;<img class="" src="http://www.jummum.co/<?=$masterFolder?>/Image/jummum_logo.png" alt="" width="120" /></p>
 <form name="resetPasswordForm" action="./resetpassword.php?codereset=<?=$_GET['codereset']?>" onsubmit="return validateForm()" method="post">
 <p>&nbsp;</p>
 <p>รหัสผ่านใหม่:<br /><input name="password" type="password" /></p>
@@ -119,10 +121,11 @@ function validateForm()
             $email = $selectedRow[0]["Email"];
             
             
-            if(time()-StrToTime($requestDate) > 2*60*60)//2 hours                
+//            if(time()-StrToTime($requestDate) > 5*60)//5 mins
+            if(time()-StrToTime($requestDate) > 2*60*60)//2 hours
             {
-                header("Location: http://www.jummum.co/" . $jummumPath . "ResetPasswordTimeOut.php");
-                //                echo "ไม่สามารถรีเซ็ตรหัสผ่านได้ กรุณาส่งคำขอเปลี่ยนรหัสผ่านอีกครั้งหนึ่ง";
+                $currentPath = substr($fullPath,0,$posLastSlash);
+                header("Location: $currentPath/ResetPasswordTimeOut.php");
             }
             else
             {

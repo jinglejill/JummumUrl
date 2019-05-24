@@ -7,10 +7,10 @@
     
     
     
-    if(isset($_POST["branchID"]) && isset($_POST["menuID"]))
+    if(isset($_POST["branchID"]) && isset($_POST["discountGroupMenuID"]))
     {
         $branchID = $_POST["branchID"];
-        $menuID = $_POST["menuID"];
+        $discountGroupMenuID = $_POST["discountGroupMenuID"];
     }
     
     
@@ -32,6 +32,7 @@
     $customerOrderStatus = $selectedRow[0]["Value"];
     
     
+    $currentDateTime = date('Y-m-d H:i:s');
     $inOpeningTime = 0;
     if($customerOrderStatus == 1)
     {
@@ -45,7 +46,6 @@
     {
         //get today's opening time**********
         $strDate = date("Y-m-d");
-        $currentDate = date("Y-m-d H:i:s");
         $dayOfWeek = date('w', strtotime($strDate));
         $sql = "select * from $dbName.OpeningTime where day = '$dayOfWeek' order by day,shiftNo";
         $selectedRow = getSelectedRow($sql);
@@ -64,7 +64,7 @@
             {
                 $startDate = date($strDate . " " . $startTime . ":00");
                 $endDate = date($strDate . " " . $endTime . ":00");
-                if($startDate<=$currentDate && $currentDate<=$endDate)
+                if($startDate<=$currentDateTime && $currentDateTime<=$endDate)
                 {
                     $inOpeningTime = 1;
                 }
@@ -74,7 +74,7 @@
                 $nextDate = date("Y-m-d", strtotime($strDate. ' + 1 days'));
                 $startDate = date($strDate . " " . $startTime . ":00");
                 $endDate = date($nextDate . " " . $endTime . ":00");
-                if($startDate<=$currentDate && $currentDate<=$endDate)
+                if($startDate<=$currentDateTime && $currentDateTime<=$endDate)
                 {
                     $inOpeningTime = 1;
                 }
@@ -109,11 +109,9 @@
     {
         $sql = "select 0 as Text;";
     }
-    $sql .= "select '$branchID' BranchID, $dbName.menu.* from $dbName.menu where Status = 1 and belongToMenuID = 0 and menuID = '$menuID';";
-    $sql .= "select '$branchID' BranchID, $dbName.menuType.* from $dbName.menu left join $dbName.menuType on $dbName.menu.menuTypeID = $dbName.menuType.menuTypeID where $dbName.menu.Status = 1 and $dbName.menuType.Status = 1 and belongToMenuID = 0  and menuID = '$menuID';";
-    $sql .= "select '$branchID' BranchID, $dbName.note.* from $dbName.note where Status = 1;";
-    $sql .= "select '$branchID' BranchID, '$branchID' BranchID, $dbName.notetype.* from $dbName.notetype where Status = 1;";
-    $sql .= "select '$branchID' BranchID, $dbName.specialPriceProgram.* from $dbName.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d') and menuID = '$menuID';";
+    $sql .= "select '$branchID' BranchID, $dbName.menu.* from $dbName.DiscountGroupMenuMap left join $dbName.menu on DiscountGroupMenuMap.MenuID = Menu.MenuID where menu.Status = 1 and menu.alacarteMenu = 1 and DiscountGroupMenuID = '$discountGroupMenuID' and DiscountGroupMenuMap.status = 1 and DiscountGroupMenuMap.Quantity > 0;";
+    $sql .= "select '$branchID' BranchID, $dbName.specialPriceProgram.* from $dbName.DiscountGroupMenuMap left join $dbName.menu on DiscountGroupMenuMap.MenuID = Menu.MenuID left join $dbName.specialPriceProgram on DiscountGroupMenuMap.MenuID = SpecialPriceProgram.MenuID left join $dbName.specialPriceProgramDay on specialPriceProgram.specialPriceProgramID = specialPriceProgramDay.specialPriceProgramID where menu.Status = 1 and menu.alacarteMenu = 1 and '$currentDateTime' between startDate and endDate and DiscountGroupMenuID = '$discountGroupMenuID' and DiscountGroupMenuMap.status = 1 and DiscountGroupMenuMap.Quantity > 0 and specialPriceProgramDay.Day = weekday('$currentDateTime')+1;";
+    $sql .= "select DiscountGroupMenuMap.* from $dbName.DiscountGroupMenuMap left join $dbName.menu on DiscountGroupMenuMap.MenuID = Menu.MenuID where menu.Status = 1 and menu.alacarteMenu = 1 and discountGroupMenuID = '$discountGroupMenuID' and DiscountGroupMenuMap.status = 1 and DiscountGroupMenuMap.Quantity > 0";
     writeToLog("sql = " . $sql);
     
     

@@ -27,7 +27,8 @@
     $selectedRow = getSelectedRow($sql);
     $dbName = $selectedRow[0]["DbName"];
     
-    $sql = "select $branchID BranchID, $dbName.CustomerTable.* from $dbName.CustomerTable where status = 1";
+    $sql = "select $branchID BranchID, $dbName.CustomerTable.* from $dbName.CustomerTable where status = 1 order by orderNo;";
+    $sql .= "select $branchID BranchID, $dbName.Zone.* from $dbName.Zone where status = 1 order by orderNo;";
 
     
     

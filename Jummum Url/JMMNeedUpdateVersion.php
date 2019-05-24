@@ -1,6 +1,6 @@
 <?php
     
-    $needUpdateVersion = "1.6.5";
+    $needUpdateVersion = "1.7";
     $checkUpdate = 0;
     
 ?>

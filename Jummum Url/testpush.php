@@ -14,7 +14,7 @@
                      ,'content-available' => $contentAvailable
                      ,'receiptID' => $receiptID
                       );
-    sendPushNotificationWithPath('7da4ed45ef61c237367f1412f19031fdcdf3a99c184a4ab98a59afcf67a20ff1',$arrBody,'./','jill');
+    sendPushNotificationWithPath('bb6eac784aff3d9c8ade3c5c547092d77c72d8f7fbe6c0f28756d6c206755053',$arrBody,'./../../AdminApp/','jill');
     
 //    sleep(5);
 //

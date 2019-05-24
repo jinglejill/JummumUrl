@@ -40,11 +40,11 @@
             $message = $selectedRow[0]["message"];
 
 
-//        //    //test
+        //    //test
 //            $message = "Shop:11,TableNo:1";
             
             
-            $arrMessage = explode(",", $message);
+            $arrMessage = explode(",", $message);            
             if(sizeof($arrMessage) == 2)
             {
                 $branchPart = $arrMessage[0];

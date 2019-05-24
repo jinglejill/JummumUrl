@@ -17,19 +17,16 @@
     if (isset($headers["content-type"]))
     {
         $content_type = $headers["content-type"];
-        writeToLog("set contentType: " . $content_type);
     }
     else
     {
         $content_type = "";
-        writeToLog("not set contentType: " . $content_type);
     }
     
     // if JSON, read and parse it
     if ($content_type == "application/json" || strpos($content_type,"application/json")!== false)
     {
         // read it
-        
         $handle = fopen("php://input", "rb");
         $raw_post_data = '';
         while (!feof($handle)) {
@@ -47,7 +44,7 @@
     }
     
     
-    writeToLog("data from omise pay: " . json_encode($data));
+    writeToLog("json data: " . json_encode($data));
     {
         $receiptID = $data["receiptID"];
         $branchID = $data["branchID"];
@@ -124,10 +121,6 @@
         $onModifiedUser[$i] = $orderNote["modifiedUser"];
         $onModifiedDate[$i] = $orderNote["modifiedDate"];
     }
-
-    
-    
-   
     
     
     
@@ -205,6 +198,95 @@
     
     
     
+    //validate menu
+    //validate menuNote
+    $arrOrderTakingNew = array();
+    $arrOrderNoteNew = array();
+    $orderChanged = 0;
+    $sql = "select * from $jummumOM.branch where branchID = '$branchID';";
+    $selectedRow = getSelectedRow($sql);
+    $dbName = $selectedRow[0]["DbName"];
+//    $takeAwayFee = $selectedRow[0]["TakeAwayFee"];
+    for($i=0; $i<sizeof($arrOrderTaking); $i++)
+    {
+        $menuID = $arrOrderTaking[$i]["menuID"];
+        $sql = "select menu.*, case when specialPriceProgramDay.specialPriceProgramDayID is null then menu.price else ifnull(specialPriceProgram.SpecialPrice,menu.price) end AS SpecialPrice from $dbName.menu LEFT JOIN $dbName.specialPriceProgram ON menu.menuID = specialPriceProgram.menuID AND date_format(now(),'%Y-%m-%d') between date_format(specialPriceProgram.startDate,'%Y-%m-%d') and date_format(specialPriceProgram.endDate,'%Y-%m-%d') left join $dbName.specialPriceProgramDay on specialPriceProgram.specialPriceProgramID = specialPriceProgramDay.specialPriceProgramID and specialPriceProgramDay.Day = weekday(now())+1 where status = 1 and menu.menuID = '$menuID'";
+        $selectedRow = getSelectedRow($sql);
+        if(sizeof($selectedRow) == 0)
+        {
+            $orderChanged = 1;
+            writeToLog("menu status not active, file: " . basename(__FILE__) . ", user: " . $data['modifiedUser']);
+        }
+        else
+        {
+            //buffetMap
+//            if($buffetReceiptID)
+            {
+                $sql = "select Menu.* from receipt LEFT JOIN ordertaking ON receipt.ReceiptID = ordertaking.ReceiptID LEFT JOIN $dbName.BuffetMenuMap on orderTaking.MenuID = BuffetMenuMap.BuffetMenuID LEFT JOIN $dbName.Menu on BuffetMenuMap.MenuID = Menu.MenuID where receipt.receiptID = '$buffetReceiptID' and BuffetMenuMap.menuID is not null and BuffetMenuMap.Status = 1 and Menu.status = 1 and menu.menuID = '$menuID'";
+                $selectedRow = getSelectedRow($sql);
+                if(sizeof($selectedRow) == 0)
+                {
+                    $orderChanged = 1;
+                    writeToLog("buffet menu status not active, file: " . basename(__FILE__) . ", user: " . $data['modifiedUser']);
+                    continue;
+                }
+            }
+            
+            
+            
+            $arrOrderTakingNew[] = $arrOrderTaking[$i];
+            
+        }
+    }
+    
+    
+    
+    //make key capital letter for OrderTaking
+    $arrOrderTakingNewCapitalKey = array();
+    for($i=0; $i<sizeof($arrOrderTakingNew); $i++)
+    {
+        $orderTakingNewCapitalKey = array();
+        $orderTakingNew = $arrOrderTakingNew[$i];
+        foreach ($orderTakingNew as $key => $value)
+        {
+            $orderTakingNewCapitalKey[makeFirstLetterUpperCase($key)] = $value;
+        }
+        array_push($arrOrderTakingNewCapitalKey,$orderTakingNewCapitalKey);
+    }
+    
+    
+    //make key capital letter for orderNote
+    $arrOrderNoteNewCapitalKey = array();
+    for($i=0; $i<sizeof($arrOrderNoteNew); $i++)
+    {
+        $orderNoteNewCapitalKey = array();
+        $orderNoteNew = $arrOrderNoteNew[$i];
+        foreach ($orderNoteNew as $key => $value)
+        {
+            $orderNoteNewCapitalKey[makeFirstLetterUpperCase($key)] = $value;
+        }
+        array_push($arrOrderNoteNewCapitalKey,$orderNoteNewCapitalKey);
+    }
+    
+    
+    $dataList = array();
+    $dataList[] = $arrOrderTakingNewCapitalKey;
+    $dataList[] = $arrOrderNoteNewCapitalKey;
+    
+    
+    
+    if($orderChanged)
+    {
+        $warningMsg = "รายการอาหารที่คุณสั่งมีการเปลี่ยนแปลงบางส่วน กรุณาตรวจทานรายการที่คุณสั่งอีกครั้งค่ะ";
+        writeToLog("รายการอาหารที่สั่งมีการอัพเดต: $warningMsg, file: " . basename(__FILE__) . ", user: " . $data['modifiedUser']);
+        
+        
+        /* execute multi query */
+        $response = array('status' => '2', 'msg' => $warningMsg, 'tableName' => 'OrderBelongToBuffet', dataJson => $dataList);
+        echo json_encode($response);
+        exit();
+    }
+    //------------
     
     
 
@@ -248,11 +330,7 @@
         //update receiptNoID and
         //select row ที่แก้ไข ขึ้นมาเก็บไว้
         $receiptID = $newID;
-        for ($i = 0; $i<2; $i++)
-        {
-            $a .= mt_rand(0,9);
-        }
-        $receiptNoID = sprintf("%06d", $receiptID) . $a;
+        $receiptNoID = luhnAlgorithm(sprintf("%06d", $receiptID));
         $sql = "update Receipt set ReceiptNoID = '$receiptNoID' where ReceiptID = '$receiptID'";
         $ret = doQueryTask($sql);
         if($ret != "")
@@ -383,9 +461,8 @@
         $category = "printKitchenBill";
         $contentAvailable = 1;
         $data = array("receiptID" => $receiptID);
-        $msg = 'New order coming!! receipt No:' . $receiptNoID;
+        $msg = 'New order coming!! order no:' . $receiptNoID;
         sendPushNotificationJummumOM($pushSyncDeviceTokenReceiveOrder,$title,$msg,$category,$contentAvailable,$data);
-//        sendPushNotificationToDeviceWithPath($pushSyncDeviceTokenReceiveOrder,"./../$jummumOM/",'jill',$msg,$receiptID,'printKitchenBill',1);
         //****************send noti to shop (turn on light)
         $ledStatus = 1;
         $sql = "update $jummumOM.Branch set LedStatus = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where branchID = '$branchID';";

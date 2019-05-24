@@ -23,10 +23,18 @@
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
     
-    $sql = "select LedStatus from Led left join Branch on Led.BranchID = Branch.BranchID where LedID = '$ledID'";    
+    $sql = "select * from $jummumOM.led where ledID = '$ledID'";
+    $selectedRow = getSelectedRow($sql);
+    $branchID = $selectedRow[0]["BranchID"];
+    
+    $sql = "select * from $jummumOM.branch where branchID = '$branchID';";
+    $selectedRow = getSelectedRow($sql);
+    $dbName = $selectedRow[0]["DbName"];
+    
+    $sql = "select Value as LedStatus from $dbName.setting where keyName = 'ledStatus'";
     $selectedRow = getSelectedRow($sql);
     echo json_encode($selectedRow[0]);
-
+    
 
     
     // Close connections

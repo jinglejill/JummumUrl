@@ -28,8 +28,7 @@
     $selectedRow = getSelectedRow($sql);
     $dbName = $selectedRow[0]["DbName"];
     //***------
-    
-    
+
     
     
     //*** get OpeningTime
@@ -114,7 +113,8 @@
     {
         $sql = "select 0 as Text;";
     }
-    $sql .= "select distinct '$branchID' BranchID, Menu.* from receipt LEFT JOIN ordertaking ON receipt.ReceiptID = ordertaking.ReceiptID LEFT JOIN $dbName.BuffetMenuMap on orderTaking.MenuID = BuffetMenuMap.BuffetMenuID LEFT JOIN $dbName.Menu on BuffetMenuMap.MenuID = Menu.MenuID where receipt.receiptID = '$receiptID' and BuffetMenuMap.menuID is not null and BuffetMenuMap.Status = 1 and Menu.status = 1;";
+    $sql .= "(select distinct '$branchID' BranchID, 0 MenuTypeOrderNo, menu.`MenuID`, `MenuCode`, `TitleThai`, menu.`Price`,0 `MenuTypeID`, `SubMenuTypeID`, `BuffetMenu`, `AlacarteMenu`, menu.`TimeToOrder`, `Recommended`, `RecommendedOrderNo`, `ImageUrl`,recommendedOrderNo `OrderNo`, menu.`Status`, menu.`Remark`, menu.`ModifiedUser`, menu.`ModifiedDate` from receipt LEFT JOIN ordertaking ON receipt.ReceiptID = ordertaking.ReceiptID LEFT JOIN $dbName.BuffetMenuMap on orderTaking.MenuID = BuffetMenuMap.BuffetMenuID LEFT JOIN $dbName.Menu on BuffetMenuMap.MenuID = Menu.MenuID where receipt.receiptID = '$receiptID' and BuffetMenuMap.menuID is not null and BuffetMenuMap.Status = 1 and Menu.status = 1 and recommended = 1) union (select distinct '$branchID' BranchID , menuType.orderNo MenuTypeOrderNo, menu.`MenuID`, `MenuCode`, `TitleThai`, menu.`Price`,menu.menuTypeID `MenuTypeID`, `SubMenuTypeID`, `BuffetMenu`, `AlacarteMenu`, menu.`TimeToOrder`, `Recommended`, `RecommendedOrderNo`, `ImageUrl`,recommendedOrderNo `OrderNo`, menu.`Status`, menu.`Remark`, menu.`ModifiedUser`, menu.`ModifiedDate`  from receipt LEFT JOIN ordertaking ON receipt.ReceiptID = ordertaking.ReceiptID LEFT JOIN $dbName.BuffetMenuMap on orderTaking.MenuID = BuffetMenuMap.BuffetMenuID LEFT JOIN $dbName.Menu on BuffetMenuMap.MenuID = Menu.MenuID left join $dbName.menuType on menu.menuTypeID = menutype.menutypeID where receipt.receiptID = '$receiptID' and BuffetMenuMap.menuID is not null and BuffetMenuMap.Status = 1 and Menu.status = 1);";
+//    echo "<br>$sql";
     $sql .= "select distinct '1' BranchID, 0 `MenuTypeID`, 'แนะนำ' `Name`,'Recommended' `NameEn`, 0 `AllowDiscount`, 0 OrderNo union(select distinct '$branchID' BranchID, MenuType.MenuTypeID, MenuType.Name, MenuType.NameEn, MenuType.AllowDiscount, MenuType.OrderNo from receipt LEFT JOIN ordertaking ON receipt.ReceiptID = ordertaking.ReceiptID LEFT JOIN $dbName.BuffetMenuMap on orderTaking.MenuID = BuffetMenuMap.BuffetMenuID LEFT JOIN $dbName.Menu on BuffetMenuMap.MenuID = Menu.MenuID left join $dbName.menuType on Menu.menuTypeID = menuType.menuTypeID where receipt.receiptID = '$receiptID' and BuffetMenuMap.menuID is not null and BuffetMenuMap.Status = 1 and Menu.status = 1 and menuType.status = '1' order by MenuType.OrderNo);";
     $sql .= "select distinct '$branchID' BranchID, specialPriceProgram.* from receipt LEFT JOIN ordertaking ON receipt.ReceiptID = ordertaking.ReceiptID LEFT JOIN $dbName.BuffetMenuMap on orderTaking.MenuID = BuffetMenuMap.BuffetMenuID LEFT JOIN $dbName.Menu on BuffetMenuMap.MenuID = Menu.MenuID left join $dbName.specialPriceProgram on Menu.menuID = specialPriceProgram.menuID left join $dbName.specialPriceProgramDay on specialPriceProgram.specialPriceProgramID = specialPriceProgramDay.specialPriceProgramID where receipt.receiptID = '$receiptID' and BuffetMenuMap.menuID is not null and BuffetMenuMap.Status = 1 and Menu.status = 1 and '$currentDateTime' between specialPriceProgram.startDate and specialPriceProgram.endDate and specialPriceProgramDay.Day = weekday('$currentDateTime')+1;";
     $sql .= "select * from receipt where receiptID = '$receiptID';";

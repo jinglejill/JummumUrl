@@ -105,8 +105,12 @@
         //****************send noti to shop (turn on light)
         //alarmShop
         //query statement
+        $sql = "select * from $jummumOM.branch where branchID = '$branchID';";
+        $selectedRow = getSelectedRow($sql);
+        $dbName = $selectedRow[0]["DbName"];
+        
         $ledStatus = 1;
-        $sql = "update $jummumOM.Branch set LedStatus = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where branchID = '$branchID';";
+        $sql = "update $dbName.Setting set value = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where keyName = 'ledStatus'"; 
         $ret = doQueryTask($sql);
         if($ret != "")
         {

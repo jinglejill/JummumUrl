@@ -18,7 +18,7 @@
     }
     
     
-    if($type == 1 || $type == 2)
+    if($type == 1 || $type == 2 || $type == 6)
     {
         $sql = "select * from $jummumOM.branch where branchID = '$branchID'";
         $selectedRow = getSelectedRow($sql);
@@ -52,8 +52,11 @@
         case 5://jummum material
             $filenameIn = "./../$masterFolder/Image/$imageFileName";
             break;
+        case 6://discount program
+            $filenameIn = "./../$masterFolder/$dbName/Image/DiscountProgram/$imageFileName";
+            break;
     }
-    
+//    echo "<br>" . $type;
     writeToLog("fileNameIn: " . $filenameIn);
     
     
@@ -68,6 +71,7 @@
         {
             case 1:
             case 2:
+            case 6:
             {
                 $filenameIn = "./../$masterFolder/$dbName/Image/NoImage.jpg";
             }

@@ -8,7 +8,7 @@
     
     
     
-    if(isset($_POST["searchText"]) && isset($_POST["page"]) && isset($_POST["perPage"]) && isset($_POST["memberID"]))
+//    if(isset($_POST["searchText"]) && isset($_POST["page"]) && isset($_POST["perPage"]) && isset($_POST["memberID"]))
     {
         $searchText = $_POST["searchText"];
         $page = $_POST["page"];
@@ -26,31 +26,175 @@
     
     $currentDateTime = date("Y-m-d H:i:s");
     $searchText = trim($searchText);
-    $strPattern = getRegExPattern($searchText);
-    $sql = "select * from (select @rownum := @rownum + 1 AS Num, c.* from (select ifnull(sum(a.Frequency),0) Frequency,ifnull(sum(b.Sales),0) Sales, promotion.PromotionID, promotion.MainBranchID,promotion.Type,promotion.Header,promotion.SubTitle,promotion.TermsConditions,promotion.ImageUrl,promotion.OrderNo,promotion.DiscountGroupMenuID,promotion.VoucherCode from promotion left join promotionbranch ON promotion.PromotionID = promotionbranch.PromotionID left join (select branchID,count(*) as Frequency from receipt where memberID = '$memberID' GROUP BY branchID) a on promotionbranch.BranchID = a.branchID left join (select branchID,SUM(NetTotal) Sales from receipt where memberID = '$memberID' GROUP BY branchID) b on promotionbranch.BranchID = b.branchID where promotion.status = 1 and '$currentDateTime' between promotion.startDate and promotion.endDate and ((promotionbranch.BranchID in (select distinct branchID from receipt where memberID = '$memberID' and promotion.type = 1)) or promotion.type = 0) and (promotion.NoOfLimitUsePerUser = 0 or promotion.NoOfLimitUsePerUser > (select count(*) from userPromotionUsed where promotionID = promotion.promotionID and userAccountID = '$memberID')) and (Header rlike '$strPattern' or SubTitle rlike '$strPattern' or TermsConditions rlike '$strPattern') GROUP BY promotion.PromotionID, promotion.MainBranchID,promotion.Type,promotion.Header,promotion.SubTitle,promotion.TermsConditions,promotion.ImageUrl,promotion.OrderNo,promotion.DiscountGroupMenuID,promotion.VoucherCode order by promotion.Type,sum(a.Frequency)desc,sum(b.Sales)desc,promotion.OrderNo) c,(SELECT @rownum := 0) r)d where Num > $perPage*($page-1) limit $perPage;";
-//    $sql .= "select * from (select @rownum := @rownum + 1 AS Num, branch.* from (select ifnull(sum(a.Frequency),0) Frequency,ifnull(sum(b.Sales),0) Sales, promotion.PromotionID, promotion.MainBranchID,promotion.Type,promotion.Header,promotion.SubTitle,promotion.TermsConditions,promotion.ImageUrl,promotion.OrderNo,promotion.DiscountGroupMenuID,promotion.VoucherCode from promotion left join promotionbranch ON promotion.PromotionID = promotionbranch.PromotionID left join (select branchID,count(*) as Frequency from receipt where memberID = '$memberID' GROUP BY branchID) a on promotionbranch.BranchID = a.branchID left join (select branchID,SUM(NetTotal) Sales from receipt where memberID = '$memberID' GROUP BY branchID) b on promotionbranch.BranchID = b.branchID where promotion.status = 1 and '$currentDateTime' between promotion.startDate and promotion.endDate and ((promotionbranch.BranchID in (select distinct branchID from receipt where memberID = '$memberID' and promotion.type = 1)) or promotion.type = 0) and (promotion.NoOfLimitUsePerUser = 0 or promotion.NoOfLimitUsePerUser > (select count(*) from userPromotionUsed where promotionID = promotion.promotionID and userAccountID = '$memberID')) and (Header rlike '$strPattern' or SubTitle rlike '$strPattern' or TermsConditions rlike '$strPattern') left join $jummumOM.branch on promotion.mainBranchID = branch.branchID GROUP BY promotion.PromotionID, promotion.MainBranchID,promotion.Type,promotion.Header,promotion.SubTitle,promotion.TermsConditions,promotion.ImageUrl,promotion.OrderNo,promotion.DiscountGroupMenuID,promotion.VoucherCode order by promotion.Type,sum(a.Frequency)desc,sum(b.Sales)desc,promotion.OrderNo) c,(SELECT @rownum := 0) r)d where Num > $perPage*($page-1) limit $perPage;"
 
+
+    //get promotionList
+    $sql = "select\
+0 as ShopType,PromotionID,MainBranchID,0 as BranchID,0 as DiscountProgramID,Type,Header,SubTitle,TermsConditions,ImageUrl,OrderNo,DiscountGroupMenuID,VoucherCode,ModifiedDate\
+from promotion\
+where status = 1 and type = 0 and '$currentDateTime' between startDate and endDate and\
+PromotionID in (select PromotionID from promotionbranch where branchID in (select branchID from receipt where memberID = '$memberID'));";
+
+    $sqlPromotion = str_replace('\\','',$sql);
+    $hotDealList = executeQueryArray($sqlPromotion);
+    
+    
+    //get dbNameList
+    $sql = "select distinct branch.BranchID, DbName from receipt left join $jummumOM.Branch on receipt.branchID = branch.branchID where memberID = '$memberID'";
     $selectedRow = getSelectedRow($sql);
-    $branchIDList = array();
+    $branchList = array();
     for($i=0; $i<sizeof($selectedRow); $i++)
     {
-        array_push($branchIDList,$selectedRow[$i]["MainBranchID"]);
+        $branchID = $selectedRow[$i]["BranchID"];
+        $dbName = $selectedRow[$i]["DbName"];
+        
+        $sql = "select count(*) as Frequency, SUM(NetTotal) Sales from receipt where memberID = '$memberID' and branchID = '$branchID'";
+        $selectedRow2 = getSelectedRow($sql);
+        $frequency = $selectedRow2[0]["Frequency"];
+        $sales = $selectedRow2[0]["Sales"];
+        
+        
+        $branchList[] = array("BranchID"=>$branchID,"DbName"=>$dbName,"Frequency"=>$frequency,"Sales"=>$sales);
     }
-    if(sizeof($branchIDList) > 0)
+    
+    //sort frequency and sales
+    usort($branchList, function($a, $b)
     {
-        $branchIDListInText = $branchIDList[0];
-        for($i=1; $i<sizeof($branchIDList); $i++)
+        $retval = $b["Frequency"] <=> $a["Frequency"];
+        if ($retval == 0) {
+            $retval = $b["Sales"] <=> $a["Sales"];
+        }
+        return $retval;
+    });
+    
+    
+    
+    //get discountProgramList
+    for($i=0; $i<sizeof($branchList); $i++)
+    {
+        $branchList[$i]["SortBranch"] = $i;
+        $branch = $branchList[$i];
+        $dbName = $branch["DbName"];
+        $branchID = $branch["BranchID"];
+        $sql = "select 1 as ShopType,0 as PromotionID,$branchID as MainBranchID,$branchID as BranchID,DiscountProgramID,Type,Header,SubTitle,TermsConditions,ImageUrl,0 OrderNo,DiscountGroupMenuID,'' as VoucherCode,ModifiedDate\
+         from $dbName.discountProgram where '$currentDateTime' between startDate and endDate";
+         $sql = str_replace('\\','',$sql);
+        
+        
+         $discountProgramList = executeQueryArray($sql);
+         for($j=0; $j<sizeof($discountProgramList); $j++)
+         {
+             $discountProgram = $discountProgramList[$j];
+//             $discountProgram->ImageUrl = "../../".$dbName."Image/DiscountProgram/".$discountProgram->ImageUrl;
+             array_push($hotDealList,$discountProgram);
+         }
+    }
+    
+    
+    //add key frequency and sales
+    for($i=0; $i<sizeof($hotDealList); $i++)
+    {
+        $hotDeal = $hotDealList[$i];
+        $hotDeal->SortBranch = 0;
+        for($j=0; $j<sizeof($branchList); $j++)
         {
-            $branchIDListInText .= "," . $branchIDList[$i];
+            $branch = $branchList[$j];
+            if($hotDeal->BranchID == $branch["BranchID"])
+            {
+                $hotDeal->SortBranch = $branch["SortBranch"];
+                break;
+            }
         }
     }
-    $sql .= "select * from $jummumOM.branch where branchID in ($branchIDListInText)";
+    
+    
+    //sort
+    usort($hotDealList, function($a, $b)
+    {
+        $retval = $a->ShopType <=> $b->ShopType;
+        if ($retval == 0) {
+            $retval = $a->Type <=> $b->Type;
+            if ($retval == 0) {
+                $retval = $a->SortBranch <=> $b->SortBranch;
+                if ($retval == 0)
+                {
+                    $retval = $b->ModifiedDate <=> $a->ModifiedDate;
+                }
+            }
+        }
+        return $retval;
+    });
+    
+    
+    //search
+    $searchHotDealList = array();
+    for($i=0; $i<sizeof($hotDealList); $i++)
+    {
+        $hotDeal = $hotDealList[$i];
+        if($searchText == "" || stripos($hotDeal->Header,$searchText) || stripos($hotDeal->SubTitle,$searchText) || stripos($hotDeal->TermsConditions,$searchText))
+        {
+            $searchHotDealList[] = $hotDeal;
+        }
+    }
     
     
     
-        /* execute multi query */
-    $jsonEncode = executeMultiQueryArray($sql);
-    $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);
+    //page
+    $pageHotDealList = array();
+    $startIndex = $perPage*($page-1);
+    for($i=$startIndex; $i<sizeof($searchHotDealList) && $i<$perPage*$page; $i++)
+    {
+        $hotDeal = $searchHotDealList[$i];
+        $pageHotDealList[] = $hotDeal;
+    }
+    
+    
+    
+    //get branchList
+    if(sizeof($branchList) > 0)
+    {
+        $branchIDListInText = $branchList[0]["BranchID"];
+        for($i=1; $i<sizeof($branchList); $i++)
+        {
+            $branchIDListInText .= "," . $branchList[$i]["BranchID"];
+        }
+    }
+    $sql = "select * from $jummumOM.branch where branchID in ($branchIDListInText)";
+    $branchList = executeQueryArray($sql);
+    
+    
+    
+    //return dataList
+    $dataList = array();
+    $dataList[] = $pageHotDealList;
+    $dataList[] = $branchList;
+
+    
+    
+    //add note word to branch
+    for($i=0; $i<sizeof($branchList); $i++)
+    {
+        $branch = $branchList[$i];
+        $eachDbName = $branch->DbName;
+
+
+        //note word เพิ่ม
+        $sql = "select * from $eachDbName.setting where keyName = 'wordAdd'";
+        $selectedRow = getSelectedRow($sql);
+        $wordAdd = $selectedRow[0]["Value"];
+        $branch->WordAdd = $wordAdd?$wordAdd:"เพิ่ม";
+
+
+        //note word ไม่ใส่
+        $sql = "select * from $eachDbName.setting where keyName = 'wordNo'";
+        $selectedRow = getSelectedRow($sql);
+        $wordNo = $selectedRow[0]["Value"];
+        $branch->WordNo = $wordNo?$wordNo:"ไม่ใส่";
+    }
+    
+    
+    
+    $response = array('success' => true, 'data' => $dataList, 'error' => null, 'status' => 1);
     echo json_encode($response);
 
 

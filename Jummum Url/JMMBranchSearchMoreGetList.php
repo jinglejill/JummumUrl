@@ -21,13 +21,32 @@
     }
     
     
+    
+    
     //select table -> branch, customerTable
     $sql = "SELECT * FROM $jummumOM.Branch where status = 1 and customerApp = 1 and name like '%$searchText%' and name > '$name' order by name limit 10;";
 
-    
+
     
     /* execute multi query */
     $jsonEncode = executeMultiQueryArray($sql);
+    if(sizeof($jsonEncode) > 0)
+    {
+        $branchList = $jsonEncode[0];
+        
+        for($i=0; $i<sizeof($branchList); $i++)
+        {
+            $branch = $branchList[$i];
+            $eachDbName = $branch->DbName;
+            
+            $sql = "select * from $eachDbName.setting where keyName = 'luckyDrawSpend'";
+            $selectedRow = getSelectedRow($sql);
+            $luckyDrawSpend = $selectedRow[0]["Value"];
+            $branch->LuckyDrawSpend = $luckyDrawSpend?$luckyDrawSpend:0;
+        }
+    }
+    
+    
     $response = array('success' => true, 'data' => $jsonEncode, 'error' => null, 'status' => 1);
     echo json_encode($response);
 

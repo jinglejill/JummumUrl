@@ -679,7 +679,6 @@
                                 }
                             }
                         }
-                        
 
                         $amount = 0;
                         $sql = "select * from $dbName.discountStepMap where discountStepID = '$discountStepID' and status = 1 order by StepSpend";
@@ -891,8 +890,7 @@
         $totalAfterDiscountProgram = $sumSpecialPrice - $discountFromDiscountProgram["DiscountValue"];
         $discountProgramValue = $discountFromDiscountProgram["DiscountValue"];
         $discountProgramTitle = $discountFromDiscountProgram["Title"];
-        $arrOrderTakingParticipate = $discountFromDiscountProgram["OrderTaking"];
-        
+//        $arrOrderTakingParticipate = $discountFromDiscountProgram["OrderTaking"];
         
         //หาสัดส่วน ส่วนลดของแต่ละ item
         $actualDiscount = $discountProgramValue > $sumSpecialPrice?$sumSpecialPrice:$discountProgramValue;
@@ -1034,16 +1032,16 @@
         }
 
 
-        if($voucherValid)
-        {
-            //minimumSpending
-            if($sumSpecialPrice < $minimumSpending)
-            {
-                //คูปองส่วนลดไม่ถูกต้อง -> ยอดสั่งซื้อขั้นต่ำไม่ถึง
-                $voucherValid = 0;
-                $warningMsg = "ยอดสั่งซื้อขั้นต่ำไม่ถึง";
-            }
-        }
+//        if($voucherValid)
+//        {
+//            //minimumSpending
+//            if($sumSpecialPrice < $minimumSpending)
+//            {
+//                //คูปองส่วนลดไม่ถูกต้อง -> ยอดสั่งซื้อขั้นต่ำไม่ถึง
+//                $voucherValid = 0;
+//                $warningMsg = "ยอดสั่งซื้อขั้นต่ำไม่ถึง";
+//            }
+//        }
 
         if(!$hasVoucherInPromotionTable)
         {
@@ -1101,16 +1099,16 @@
 
 
 
-            if($voucherValid2)
-            {
-                //minimumSpending
-                if($sumSpecialPrice < $minimumSpending)
-                {
-                    //คูปองส่วนลดไม่ถูกต้อง -> ยอดสั่งซื้อขั้นต่ำไม่ถึง
-                    $voucherValid2 = 0;
-                    $warningMsg2 = "ยอดสั่งซื้อขั้นต่ำไม่ถึง";
-                }
-            }
+//            if($voucherValid2)
+//            {
+//                //minimumSpending
+//                if($sumSpecialPrice < $minimumSpending)
+//                {
+//                    //คูปองส่วนลดไม่ถูกต้อง -> ยอดสั่งซื้อขั้นต่ำไม่ถึง
+//                    $voucherValid2 = 0;
+//                    $warningMsg2 = "ยอดสั่งซื้อขั้นต่ำไม่ถึง";
+//                }
+//            }
         }
 
 
@@ -1216,6 +1214,7 @@
                         {
                             for($i=0; $i<sizeof($arrOrderTaking); $i++)
                             {
+//                                echo "<br>price: " . $arrOrderTaking[$i]["price"] . ", specialPrice: " . $arrOrderTaking[$i]["specialPrice"].", discountProgramValue: " .$arrOrderTaking[$i]["discountProgramValue"];
                                 if($discountOnTop || (($arrOrderTaking[$i]["price"] == $arrOrderTaking[$i]["specialPrice"]) && ($arrOrderTaking[$i]["discountProgramValue"] == 0)))
                                 {
                                     $menuParticipateValue += $arrOrderTaking[$i]["specialPrice"] - $arrOrderTaking[$i]["discountProgramValue"];
@@ -1242,6 +1241,7 @@
                         }
                     }
 
+//                    echo "<br>test menuParticipateValue: " . $menuParticipateValue;
                     if($menuParticipateValue >= $minimumSpend)
                     {
                         if($discountType == 1)
